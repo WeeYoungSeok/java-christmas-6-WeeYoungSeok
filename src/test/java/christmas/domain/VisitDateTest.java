@@ -5,8 +5,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.time.LocalDate;
 import java.time.Month;
+import java.time.YearMonth;
 
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
@@ -18,8 +18,7 @@ public class VisitDateTest {
 
     @BeforeEach
     void setUp() {
-        LocalDate localDate = LocalDate.of(year, month, 1);
-        this.endDay = localDate.lengthOfMonth();
+        this.endDay = YearMonth.of(year, month).lengthOfMonth();
     }
 
     @ParameterizedTest
