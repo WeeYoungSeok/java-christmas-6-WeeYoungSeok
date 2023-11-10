@@ -7,8 +7,8 @@ public class VisitDate {
         this.visitDay = visitDay;
     }
 
-    public static VisitDate of(final int visitDay, final int firstDay, final int endDay) {
-        validate(visitDay, firstDay, endDay);
+    public static VisitDate of(final int visitDay, EventCalendar eventCalendar) {
+        validate(visitDay, eventCalendar.getStartDate(), eventCalendar.getEndDate());
         return new VisitDate(visitDay);
     }
 

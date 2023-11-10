@@ -14,4 +14,12 @@ public class EventCalendar {
         DayOfWeek dayOfWeek = currentDate.withDayOfMonth(day).getDayOfWeek();
         return dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY;
     }
+
+    public int getStartDate() {
+        return currentDate.getDayOfMonth();
+    }
+
+    public int getEndDate() {
+        return currentDate.lengthOfMonth();
+    }
 }
