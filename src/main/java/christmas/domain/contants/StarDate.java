@@ -10,6 +10,6 @@ public class StarDate {
     }
 
     public boolean visitDateContainsStarDates(int day) {
-        return false;
+        return starDates.contains(day);
     }
 }
