@@ -1,4 +1,4 @@
-package christmas.domain.contants;
+package christmas.domain;
 
 import java.util.List;
 
