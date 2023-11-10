@@ -7,7 +7,7 @@
 - [ ] 🗓️**날짜**
     - [ ] <span style="color: #FC8C8C">**[예외]**</span> `숫자가 아니라면` ERROR 발생 후, 다시 입력 받는다.
     - [ ] <span style="color: #FC8C8C">**[예외]**</span> `음수라면` ERROR 발생 후, 다시 입력 받는다.
-    - [ ] <span style="color: #FC8C8C">**[예외]**</span> `해당 월의 날짜를 벗어나면` ERROR 발생 후, 다시 입력 받는다.
+    - [x] <span style="color: #FC8C8C">**[예외]**</span> `해당 월의 날짜를 벗어나면` ERROR 발생 후, 다시 입력 받는다.
     - [ ] `해당 날짜에 맞게` 이벤트를 반환한다.
 - [ ] 🥘**메뉴**
     - [ ] `입력된 메뉴`를 생성한다.
