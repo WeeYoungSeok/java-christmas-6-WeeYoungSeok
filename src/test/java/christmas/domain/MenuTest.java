@@ -14,4 +14,11 @@ public class MenuTest {
     void invalidOrder(String menuInput) {
         assertThatIllegalArgumentException().isThrownBy(() -> new Menu(menuInput));
     }
+
+    @ParameterizedTest
+    @DisplayName("메뉴의 개수가 1이상의 숫자가 아니라면 예외 발생")
+    @ValueSource(strings = {"해산물파스타-0,콜라-0", "안심스테이크-2,화이트와인-0,그릭샐러드-1", "초코아이스크림-0"})
+    void invalidMenuCount(String menuInput) {
+        assertThatIllegalArgumentException().isThrownBy(() -> new Menu(menuInput));
+    }
 }
