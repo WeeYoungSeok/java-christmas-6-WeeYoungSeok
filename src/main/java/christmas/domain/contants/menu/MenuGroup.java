@@ -35,4 +35,12 @@ public enum MenuGroup {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.INVALID_ORDER.getMessage()));
     }
+
+    public static MenuGroup findMenuCategory(String menuName) {
+        return Arrays.stream(MenuGroup.values())
+                .filter(menuGroup -> menuGroup.getMenuItems().stream()
+                        .anyMatch(menu -> menu.getName().equals(menuName)))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.INVALID_ORDER.getMessage()));
+    }
 }
