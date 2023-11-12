@@ -1,5 +1,7 @@
 package christmas.domain.contants.menu;
 
+import christmas.message.ErrorMessage;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,5 +26,13 @@ public enum MenuGroup {
 
     public List<MenuInterface> getMenuItems() {
         return menuItems;
+    }
+
+    public static MenuInterface findMenu(String menuName) {
+        return Arrays.stream(MenuGroup.values())
+                .flatMap(menuGroup -> menuGroup.getMenuItems().stream()
+                        .filter(menu -> menu.getName().equals(menuName)))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.INVALID_ORDER.getMessage()));
     }
 }
