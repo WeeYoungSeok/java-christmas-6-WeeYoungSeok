@@ -15,6 +15,14 @@ public class EventCalendar {
         return dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY;
     }
 
+    public int getYear() {
+        return currentDate.getYear();
+    }
+
+    public int getMonth() {
+        return currentDate.getMonthValue();
+    }
+
     public int getStartDate() {
         return currentDate.getDayOfMonth();
     }
