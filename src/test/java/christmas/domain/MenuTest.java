@@ -17,7 +17,7 @@ public class MenuTest {
 
     @ParameterizedTest
     @DisplayName("메뉴의 개수가 1이상의 숫자가 아니라면 예외 발생")
-    @ValueSource(strings = {"해산물파스타-0,콜라-0", "안심스테이크-2,화이트와인-0,그릭샐러드-1", "초코아이스크림-0"})
+    @ValueSource(strings = {"해산물파스타-0,제로콜라-0", "티본스테이크-2,레드와인-0", "아이스크림-0"})
     void invalidMenuCount(String menuInput) {
         assertThatIllegalArgumentException().isThrownBy(() -> new Menu(menuInput));
     }

@@ -33,7 +33,7 @@ public enum MenuGroup {
                 .flatMap(menuGroup -> menuGroup.getMenuItems().stream()
                         .filter(menu -> menu.getName().equals(menuName)))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.INVALID_ORDER.getMessage()));
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.INVALID_ORDER.getFormattedMessage()));
     }
 
     public static MenuGroup findMenuCategory(String menuName) {
@@ -41,6 +41,6 @@ public enum MenuGroup {
                 .filter(menuGroup -> menuGroup.getMenuItems().stream()
                         .anyMatch(menu -> menu.getName().equals(menuName)))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.INVALID_ORDER.getMessage()));
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.INVALID_ORDER.getFormattedMessage()));
     }
 }
