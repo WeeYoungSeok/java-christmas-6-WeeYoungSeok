@@ -13,7 +13,7 @@
     - [ ] `입력된 메뉴`를 생성한다.
     - [ ] <span style="color: #FC8C8C">**[예외]**</span> `메뉴의 예시와 맞지 않는다면` ERROR 발생 후, 다시 입력 받는다.
     - [ ] <span style="color: #FC8C8C">**[예외]**</span> `메뉴의 갯수가 1미만이거나 숫자가 아니라면` ERROR 발생 후, 다시 입력 받는다.
-    - [ ] <span style="color: #FC8C8C">**[예외]**</span> `없는 메뉴를 입력한다면` ERROR 발생 후, 다시 입력 받는다.
+    - [x] <span style="color: #FC8C8C">**[예외]**</span> `없는 메뉴를 입력한다면` ERROR 발생 후, 다시 입력 받는다.
     - [ ] <span style="color: #FC8C8C">**[예외]**</span> `음료만 주문한 경우` ERROR 발생 후, 다시 입력 받는다.
     - [ ] <span style="color: #FC8C8C">**[예외]**</span> `중복된 메뉴가 입력된다면` ERROR 발생 후, 다시 입력 받는다.
     - [ ] <span style="color: #FC8C8C">**[예외]**</span> `메뉴가 20개가 넘는다면` ERROR 발생 후, 다시 입력 받는다.
