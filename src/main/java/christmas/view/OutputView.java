@@ -24,7 +24,14 @@ public class OutputView {
 
     public static void printGift(Event event) {
         System.out.println(OutputMessage.GIFT_MENU.getFormattedMessage());
-        event.getGifts().forEach((key, value) -> System.out.println(key.getName() + " " + key.getCount() + "개"));
+        StringBuilder stringBuilder = new StringBuilder();
+        event.getGifts().forEach((key, value) -> {
+            stringBuilder.append(key.getName());
+            if (!stringBuilder.toString().contains("없음")) {
+                stringBuilder.append(" ").append(key.getCount()).append("개");
+            }
+        });
+        System.out.println(stringBuilder);
         System.out.println();
     }
 
