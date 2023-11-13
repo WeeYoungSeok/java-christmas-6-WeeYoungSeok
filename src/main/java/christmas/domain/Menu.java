@@ -6,10 +6,7 @@ import christmas.domain.contants.menu.MenuInterface;
 import christmas.message.ErrorMessage;
 import christmas.util.NumericConverter;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Menu {
     private static final int MAX_MENU_COUNT = 20;
@@ -102,5 +99,13 @@ public class Menu {
                 .filter(menuGroup -> menuGroup.getKey().equals(categoryMenu.getTitle()))
                 .mapToInt(menuGroup -> menuGroup.getValue().values().stream().mapToInt(Integer::intValue).sum())
                 .sum();
+    }
+
+    @Override
+    public String toString() {
+        StringJoiner stringJoiner = new StringJoiner("\n");
+        this.menus.forEach((key, value) -> value.forEach((menu, count) ->
+                stringJoiner.add(menu.getName() + " " + count + "개")));
+        return stringJoiner.toString();
     }
 }

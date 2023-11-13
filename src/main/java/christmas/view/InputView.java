@@ -20,6 +20,7 @@ public class InputView {
     public static String readMenu() {
         System.out.println(InputMessage.ORDER_MENU.getMessage());
         String inputMenu = Console.readLine();
+        System.out.println();
         CommonValidator.isBlank(inputMenu);
         RegularExpression.MENU_REGEX.validateMatch(inputMenu.replace(" ", ""));
         return inputMenu.replace(" ", "");

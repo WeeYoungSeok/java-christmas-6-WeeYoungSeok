@@ -16,6 +16,7 @@ public class ChristmasPromotionController {
         eventCalendarSetting(2023, 12);
         visitDate();
         menuSetting();
+        result();
     }
 
     private void eventCalendarSetting(int year, int month) {
@@ -47,5 +48,9 @@ public class ChristmasPromotionController {
                 System.out.println();
             }
         }
+    }
+
+    private void result() {
+        OutputView.printMenu(menu);
     }
 }
