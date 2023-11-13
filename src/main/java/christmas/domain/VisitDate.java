@@ -1,5 +1,7 @@
 package christmas.domain;
 
+import christmas.domain.contants.event.EventValue;
+
 public class VisitDate {
     private final int visitDay;
 
@@ -24,5 +26,13 @@ public class VisitDate {
 
     public boolean isWeekend(EventCalendar eventCalendar) {
         return eventCalendar.isWeekend(this.visitDay);
+    }
+
+    public boolean isChristmasDDay(EventCalendar eventCalendar) {
+        return eventCalendar.isChristmasDDay(this.visitDay);
+    }
+
+    public int christmasDDayCalculate() {
+        return this.visitDay - EventValue.CHRISTMAS_START_DAY.getValue();
     }
 }

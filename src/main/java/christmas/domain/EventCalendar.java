@@ -1,5 +1,7 @@
 package christmas.domain;
 
+import christmas.domain.contants.event.EventValue;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 
@@ -13,6 +15,10 @@ public class EventCalendar {
     public boolean isWeekend(int day) {
         DayOfWeek dayOfWeek = currentDate.withDayOfMonth(day).getDayOfWeek();
         return dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY;
+    }
+
+    public boolean isChristmasDDay(int day) {
+        return day >= EventValue.CHRISTMAS_START_DAY.getValue() || day <= EventValue.CHRISTMAS_END_DAY.getValue();
     }
 
     public int getYear() {

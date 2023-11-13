@@ -1,6 +1,7 @@
 package christmas.domain;
 
 import christmas.domain.contants.event.EventDiscount;
+import christmas.domain.contants.event.EventValue;
 import christmas.domain.contants.menu.MenuGroup;
 
 import java.util.HashMap;
@@ -17,7 +18,7 @@ public class Event {
         Map<EventDiscount, Integer> eventDiscounts = new HashMap<>();
         weekdayDiscountSetting(visitDate, eventCalendar, menu, eventDiscounts);
         weekendDiscountSetting(visitDate, eventCalendar, menu, eventDiscounts);
-
+        christmasDDayDiscountSetting(visitDate, eventCalendar, eventDiscounts);
         return eventDiscounts;
     }
 
@@ -31,6 +32,18 @@ public class Event {
         if (visitDate.isWeekend(eventCalendar)) {
             eventDiscounts.put(EventDiscount.WEEKEND, menu.categoryMenuCount(MenuGroup.MAIN));
         }
+    }
+
+    public void christmasDDayDiscountSetting(VisitDate visitDate, EventCalendar eventCalendar, Map<EventDiscount, Integer> eventDiscounts) {
+        if (isVisitDateChristmasDDay(visitDate, eventCalendar)) {
+            eventDiscounts.put(EventDiscount.CHRISTMAS, christmasDDayCalculate(visitDate));
+        }
+    }
+
+    public int christmasDDayCalculate(VisitDate visitDate) {
+        return EventDiscount.CHRISTMAS.getDiscount() +
+                (EventValue.CHRISTMAS_ON_THE_RISE_FORM_DAY.getValue() *
+                        visitDate.christmasDDayCalculate());
     }
 
 
@@ -51,6 +64,6 @@ public class Event {
     }
 
     public boolean isVisitDateChristmasDDay(VisitDate visitDate, EventCalendar eventCalendar) {
-        return false;
+        return visitDate.isChristmasDDay(eventCalendar);
     }
 }
