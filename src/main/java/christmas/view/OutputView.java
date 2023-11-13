@@ -2,6 +2,7 @@ package christmas.view;
 
 import christmas.domain.Event;
 import christmas.domain.Menu;
+import christmas.util.EventCalculate;
 import christmas.view.contants.OutputMessage;
 
 import java.util.StringJoiner;
@@ -10,6 +11,7 @@ public class OutputView {
 
     private static StringBuilder stringBuilder = new StringBuilder();
     private static StringJoiner stringJoiner = new StringJoiner("\n");
+    private static EventCalculate eventCalculate = new EventCalculate();
 
     public static void printStart() {
         System.out.println(OutputMessage.START.getMessage());
@@ -76,6 +78,16 @@ public class OutputView {
         if (!stringBuilder.isEmpty()) {
             System.out.println(stringBuilder);
         }
+    }
+
+    public static void printAfterDiscount(Menu menu, Event event) {
+        System.out.println(OutputMessage.AFTER_DISCOUNT_EXPECTED_PAY_AMOUNT.getFormattedMessage());
+        System.out.println(
+                String.format(
+                        OutputMessage.PRICE.getMessage(),
+                        eventCalculate.minus(menu.getTotalMenuPrice(), event.getTotalEventDiscount())
+                )
+        );
     }
 
     public static void printErrorMessage(String errorMessage) {

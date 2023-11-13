@@ -101,6 +101,18 @@ public class Event {
                 .sum();
     }
 
+    public int getChristmasDDayDiscount() {
+        return this.eventDiscountGroup.entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().equals(EventDiscount.CHRISTMAS))
+                .mapToInt(Map.Entry::getValue)
+                .sum();
+    }
+
+    public int getTotalEventDiscount() {
+        return getWeekdayDiscount() + getWeekendDiscount() + getSpecialDiscount() + getChristmasDDayDiscount();
+    }
+
     public boolean isVisitDateChristmasDDay(VisitDate visitDate, EventCalendar eventCalendar) {
         return visitDate.isChristmasDDay(eventCalendar);
     }
