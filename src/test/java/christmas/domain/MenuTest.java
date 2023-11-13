@@ -76,6 +76,13 @@ public class MenuTest {
         assertThat(menu.mainMenuCount()).isEqualTo(mainMenuCount);
     }
 
+    @ParameterizedTest
+    @DisplayName("디저트 메뉴 갯수 반환")
+    @MethodSource("menuSetting")
+    void dessertMenuCount(Menu menu, int totalPrice, int mainMenuCount) {
+        assertThat(menu.dessertMenuCount()).isEqualTo(mainMenuCount);
+    }
+
     static Stream<Arguments> menuSetting() {
         return Stream.of(
                 Arguments.arguments(new Menu("해산물파스타-1,제로콜라-1,티본스테이크-2"), 148_000, 3),

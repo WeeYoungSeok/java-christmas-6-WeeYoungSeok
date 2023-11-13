@@ -111,4 +111,12 @@ public class Menu {
                 .mapToInt(menuGroup -> menuGroup.getValue().values().stream().mapToInt(Integer::intValue).sum())
                 .sum();
     }
+
+    public int dessertMenuCount() {
+        return this.menus.entrySet()
+                .stream()
+                .filter(menuGroup -> menuGroup.getKey().equals(MenuGroup.DESSERT.getTitle()))
+                .mapToInt(menuGroup -> menuGroup.getValue().values().stream().mapToInt(Integer::intValue).sum())
+                .sum();
+    }
 }
