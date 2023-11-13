@@ -105,6 +105,10 @@ public class Menu {
     }
 
     public int mainMenuCount() {
-        return 0;
+        return this.menus.entrySet()
+                .stream()
+                .filter(menuGroup -> menuGroup.getKey().equals(MenuGroup.MAIN.getTitle()))
+                .mapToInt(menuGroup -> menuGroup.getValue().values().stream().mapToInt(Integer::intValue).sum())
+                .sum();
     }
 }
