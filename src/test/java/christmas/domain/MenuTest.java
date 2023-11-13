@@ -1,5 +1,6 @@
 package christmas.domain;
 
+import christmas.domain.contants.menu.MenuGroup;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -73,20 +74,20 @@ public class MenuTest {
     @DisplayName("메인 메뉴 갯수 반환")
     @MethodSource("menuSetting")
     void mainMenuCount(Menu menu, int totalPrice, int mainMenuCount) {
-        assertThat(menu.mainMenuCount()).isEqualTo(mainMenuCount);
+        assertThat(menu.categoryMenuCount(MenuGroup.MAIN)).isEqualTo(mainMenuCount);
     }
 
     @ParameterizedTest
     @DisplayName("디저트 메뉴 갯수 반환")
     @MethodSource("menuSetting")
-    void dessertMenuCount(Menu menu, int totalPrice, int mainMenuCount) {
-        assertThat(menu.dessertMenuCount()).isEqualTo(mainMenuCount);
+    void dessertMenuCount(Menu menu, int totalPrice, int dessertCount) {
+        assertThat(menu.categoryMenuCount(MenuGroup.DESSERT)).isEqualTo(dessertCount);
     }
 
     static Stream<Arguments> menuSetting() {
         return Stream.of(
-                Arguments.arguments(new Menu("해산물파스타-1,제로콜라-1,티본스테이크-2"), 148_000, 3),
-                Arguments.arguments(new Menu("아이스크림-1,제로콜라-1,양송이수프-2,크리스마스파스타-3,시저샐러드-4"), 127_000, 3)
+                Arguments.arguments(new Menu("초코케이크-3,해산물파스타-1,제로콜라-1,티본스테이크-2"), 193_000, 3),
+                Arguments.arguments(new Menu("아이스크림-3,제로콜라-1,양송이수프-2,크리스마스파스타-3,시저샐러드-4"), 137_000, 3)
         );
     }
 }

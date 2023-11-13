@@ -104,18 +104,10 @@ public class Menu {
         return getTotalMenuPrice() >= EVENT_APPLY_PRICE;
     }
 
-    public int mainMenuCount() {
+    public int categoryMenuCount(MenuGroup categoryMenu) {
         return this.menus.entrySet()
                 .stream()
-                .filter(menuGroup -> menuGroup.getKey().equals(MenuGroup.MAIN.getTitle()))
-                .mapToInt(menuGroup -> menuGroup.getValue().values().stream().mapToInt(Integer::intValue).sum())
-                .sum();
-    }
-
-    public int dessertMenuCount() {
-        return this.menus.entrySet()
-                .stream()
-                .filter(menuGroup -> menuGroup.getKey().equals(MenuGroup.DESSERT.getTitle()))
+                .filter(menuGroup -> menuGroup.getKey().equals(categoryMenu.getTitle()))
                 .mapToInt(menuGroup -> menuGroup.getValue().values().stream().mapToInt(Integer::intValue).sum())
                 .sum();
     }
