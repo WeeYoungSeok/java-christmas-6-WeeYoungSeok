@@ -141,7 +141,7 @@ public class EventTest {
                 Arrays.stream(Gift.values())
                         .filter(giftEnum -> giftEnum.isGiftApplicable(menu.getTotalMenuPrice()))
                         .findFirst()
-                        .orElse(Gift.NONE)
+                        .orElse(null)
         );
     }
 

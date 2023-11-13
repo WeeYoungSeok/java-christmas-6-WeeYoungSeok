@@ -8,6 +8,9 @@ import java.util.StringJoiner;
 
 public class OutputView {
 
+    private static StringBuilder stringBuilder = new StringBuilder();
+    private static StringJoiner stringJoiner = new StringJoiner("\n");
+
     public static void printStart() {
         System.out.println(OutputMessage.START.getMessage());
     }
@@ -32,7 +35,7 @@ public class OutputView {
                     .append(" ").append(key.getCount()).append("개");
         });
         if (stringBuilder.isEmpty()) {
-            stringBuilder.append("없음");
+            stringBuilder.append(OutputMessage.NONE.getMessage());
         }
         System.out.println(stringBuilder);
         System.out.println();
@@ -41,32 +44,33 @@ public class OutputView {
     public static void printBenefits(Event event) {
         System.out.println(OutputMessage.BENEFITS_HISTORY.getFormattedMessage());
         printDiscount(event);
+        builderAndJoinerReset();
         printGiftBenefits(event);
         System.out.println();
     }
 
     public static void printDiscount(Event event) {
-        StringBuilder stringBuilder = new StringBuilder();
-        StringJoiner stringJoiner = new StringJoiner("\n");
         event.getEventDiscountGroup().entrySet()
                 .stream().filter(entry -> entry.getValue() != 0)
                 .forEach(entry-> stringJoiner.add(
-                        entry.getKey().getDiscountName() + ": -" + String.format(OutputMessage.PRICE.getMessage(), entry.getValue())
+                        entry.getKey().getDiscountName() +
+                                OutputMessage.COLON.getMessage() + " " + OutputMessage.MINUS.getMessage() +
+                                String.format(OutputMessage.PRICE.getMessage(), entry.getValue())
                 ));
         stringBuilder.append(stringJoiner);
         if (stringBuilder.isEmpty()) {
-            stringBuilder.append("없음");
+            stringBuilder.append(OutputMessage.NONE.getMessage());
         }
         System.out.println(stringBuilder);
     }
 
     public static void printGiftBenefits(Event event) {
-        StringBuilder stringBuilder = new StringBuilder();
-        StringJoiner stringJoiner = new StringJoiner("\n");
         event.getGifts().entrySet()
                 .stream().filter(entry -> entry.getValue() != 0)
                 .forEach(entry-> stringJoiner.add(
-                        OutputMessage.GIFT_EVENT.getMessage() + "-" + String.format(OutputMessage.PRICE.getMessage(), entry.getValue())
+                        OutputMessage.GIFT_EVENT.getMessage() +
+                                OutputMessage.COLON.getMessage() + " " + OutputMessage.MINUS.getMessage() +
+                                String.format(OutputMessage.PRICE.getMessage(), entry.getValue())
                 ));
         stringBuilder.append(stringJoiner);
         if (!stringBuilder.isEmpty()) {
@@ -76,5 +80,10 @@ public class OutputView {
 
     public static void printErrorMessage(String errorMessage) {
         System.out.println(errorMessage);
+    }
+
+    public static void builderAndJoinerReset() {
+        stringBuilder = new StringBuilder();
+        stringJoiner = new StringJoiner("\n");
     }
 }
