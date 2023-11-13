@@ -80,6 +80,18 @@ public class OutputView {
         }
     }
 
+    public static void printBenefitsAmount(Event event) {
+        System.out.println(OutputMessage.TOTAL_BENEFITS_AMOUNT.getFormattedMessage());
+        System.out.println(
+                OutputMessage.MINUS.getMessage() +
+                        String.format(
+                                OutputMessage.PRICE.getMessage(),
+                                eventCalculate.plus(event.getTotalEventDiscount(), event.getTotalGiftAmount())
+                        )
+        );
+        System.out.println();
+    }
+
     public static void printAfterDiscount(Menu menu, Event event) {
         System.out.println(OutputMessage.AFTER_DISCOUNT_EXPECTED_PAY_AMOUNT.getFormattedMessage());
         System.out.println(
@@ -88,6 +100,7 @@ public class OutputView {
                         eventCalculate.minus(menu.getTotalMenuPrice(), event.getTotalEventDiscount())
                 )
         );
+        System.out.println();
     }
 
     public static void printErrorMessage(String errorMessage) {

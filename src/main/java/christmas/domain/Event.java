@@ -109,6 +109,13 @@ public class Event {
                 .sum();
     }
 
+    public int getTotalGiftAmount() {
+        return this.gifts.values()
+                .stream()
+                .mapToInt(amount -> amount)
+                .sum();
+    }
+
     public int getTotalEventDiscount() {
         return getWeekdayDiscount() + getWeekendDiscount() + getSpecialDiscount() + getChristmasDDayDiscount();
     }
