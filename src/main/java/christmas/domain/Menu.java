@@ -11,11 +11,14 @@ import java.util.List;
 import java.util.Map;
 
 public class Menu {
+    private static final int MAX_MENU_COUNT = 20;
+
     private final Map<String, Map<MenuInterface, Integer>> menus;
 
     public Menu(String menuInput) {
         String[] menuCommaSplit = menuInput.split(",");
         validateDuplicateMenu(menuCommaSplit);
+        validateMenuCountLimits(menuCommaSplit);
         this.menus = menuSettingAndValidate(menuCommaSplit);
     }
 
@@ -26,7 +29,7 @@ public class Menu {
                     String menuName = menuNameAndCount.split("-")[0];
                     String menuCount = menuNameAndCount.split("-")[1];
                     menuGroups.computeIfAbsent(validateInvalidMenuName(menuName).getTitle(), k -> new HashMap<>())
-                            .put(MenuGroup.findMenu(menuName), validateMenuCount(menuCount));
+                            .put(MenuGroup.findMenu(menuName), Integer.parseInt(menuCount));
                 });
         validateOnlyBeverage(menuGroups);
         return menuGroups;
@@ -75,6 +78,16 @@ public class Menu {
         if (menuGroups.entrySet().stream()
                 .allMatch(entry -> entry.getKey().equals(MenuGroup.BEVERAGE.getTitle()))) {
             throw new IllegalArgumentException();
+        }
+    }
+
+    public void validateMenuCountLimits(String[] menuNameAndCount) {
+        if (Arrays.stream(menuNameAndCount)
+                .mapToInt(nameAndCount -> validateMenuCount(nameAndCount.split("-")[1]))
+                .sum() > MAX_MENU_COUNT) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_ORDER +
+                    "\n" +
+                    ErrorMessage.INVALID_MENU_COUNT_LIMITS.getReasonFormattedMessage());
         }
     }
 }
