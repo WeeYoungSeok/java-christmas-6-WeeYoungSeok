@@ -4,6 +4,7 @@ import christmas.domain.contants.event.EventDiscount;
 import christmas.domain.contants.event.EventValue;
 import christmas.domain.contants.menu.MenuGroup;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,9 +17,14 @@ public class Event {
 
     public Map<EventDiscount, Integer> eventDiscountSetting(VisitDate visitDate, EventCalendar eventCalendar, Menu menu) {
         Map<EventDiscount, Integer> eventDiscounts = new HashMap<>();
-        weekdayDiscountSetting(visitDate, eventCalendar, menu, eventDiscounts);
-        weekendDiscountSetting(visitDate, eventCalendar, menu, eventDiscounts);
-        christmasDDayDiscountSetting(visitDate, eventCalendar, eventDiscounts);
+        if (menu.getTotalMenuPrice() >= EventValue.ORDER_MIN_PRICE.getValue()) {
+            weekdayDiscountSetting(visitDate, eventCalendar, menu, eventDiscounts);
+            weekendDiscountSetting(visitDate, eventCalendar, menu, eventDiscounts);
+            christmasDDayDiscountSetting(visitDate, eventCalendar, eventDiscounts);
+            return eventDiscounts;
+        }
+        Arrays.stream(EventDiscount.values())
+                .forEach(eventDiscount -> eventDiscounts.put(eventDiscount, 0));
         return eventDiscounts;
     }
 
