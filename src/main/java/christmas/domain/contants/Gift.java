@@ -4,7 +4,7 @@ import java.util.function.Function;
 
 public enum Gift {
     NONE("없음", 0, 0, false, (amount) -> false),
-    CHAMPAGNE("샴페인", 1, 25_000, true, (amount) -> amount >= 120_000);
+    CHAMPAGNE("샴페인", 25_000, 1, true, (amount) -> amount >= 120_000);
 
     private final String name;
     private final int price;
@@ -38,10 +38,5 @@ public enum Gift {
 
     public boolean isGiftApplicable(int amount) {
         return giftApplicable.apply(amount);
-    }
-
-    @Override
-    public String toString() {
-        return this.name + " " + this.count + "개";
     }
 }

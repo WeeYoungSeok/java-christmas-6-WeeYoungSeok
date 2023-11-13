@@ -1,5 +1,6 @@
 package christmas.domain;
 
+import christmas.domain.contants.Gift;
 import christmas.domain.contants.event.EventDiscount;
 import christmas.domain.contants.event.EventValue;
 import christmas.domain.contants.menu.MenuGroup;
@@ -10,9 +11,12 @@ import java.util.Map;
 
 public class Event {
     private final Map<EventDiscount, Integer> eventDiscountGroup;
+    private final Map<Gift, Integer> gifts;
+
 
     public Event(VisitDate visitDate, EventCalendar eventCalendar, Menu menu, StarDate starDate) {
         this.eventDiscountGroup = eventDiscountSetting(visitDate, eventCalendar, starDate, menu);
+        this.gifts = giftSetting(visitDate, eventCalendar, menu);
     }
 
     public Map<EventDiscount, Integer> eventDiscountSetting(VisitDate visitDate, EventCalendar eventCalendar, StarDate starDate, Menu menu) {
@@ -27,6 +31,21 @@ public class Event {
         Arrays.stream(EventDiscount.values())
                 .forEach(eventDiscount -> eventDiscounts.put(eventDiscount, 0));
         return eventDiscounts;
+    }
+
+    public Map<Gift, Integer> giftSetting(VisitDate visitDate, EventCalendar eventCalendar, Menu menu) {
+        Map<Gift, Integer> gifts = new HashMap<>();
+        if (menu.getTotalMenuPrice() >= EventValue.ORDER_MIN_PRICE.getValue()
+                && isVisitDateAllDateEvent(visitDate, eventCalendar)) {
+            Arrays.stream(Gift.values())
+                    .filter(gift -> gift.isGiftApplicable(menu.getTotalMenuPrice()))
+                    .filter(Gift::getGift)
+                    .forEach(gift -> gifts.put(gift, gift.getCount() * gift.getPrice()));
+        }
+        if (gifts.isEmpty()) {
+            gifts.put(Gift.NONE, Gift.NONE.getPrice());
+        }
+        return gifts;
     }
 
     public void weekdayDiscountSetting(VisitDate visitDate, EventCalendar eventCalendar, Menu menu, Map<EventDiscount, Integer> eventDiscounts) {
