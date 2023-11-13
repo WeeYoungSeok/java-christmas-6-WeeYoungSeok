@@ -12,6 +12,6 @@ public class InputView {
         System.out.println(InputMessage.VISIT_DATE.getMessage());
         String inputDate = Console.readLine();
         CommonValidator.isBlank(inputDate);
-        return numericConverter.convert(inputDate);
+        return numericConverter.convert(inputDate.replace(" ", ""));
     }
 }
