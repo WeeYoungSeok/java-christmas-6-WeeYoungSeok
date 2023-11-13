@@ -7,12 +7,14 @@ import christmas.util.NumericConverter;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Menu {
     private final Map<String, Map<MenuInterface, Integer>> menus;
 
     public Menu(String menuInput) {
+        validateDuplicateMenu(menuInput);
         this.menus = menuSettingAndValidate(menuInput);
     }
 
@@ -38,9 +40,9 @@ public class Menu {
             return validateMenuCountIsPositive(numericConverter.convert(menuCount));
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(
-                    ErrorMessage.INVALID_ORDER.getFormattedMessage()
-                            + "\n"
-                            + ErrorMessage.INVALID_MENU_COUNT.getMessage()
+                    ErrorMessage.INVALID_ORDER.getFormattedMessage() +
+                            "\n" +
+                            ErrorMessage.INVALID_MENU_COUNT.getMessage()
             );
         }
     }
@@ -54,5 +56,16 @@ public class Menu {
             );
         }
         return menuCount;
+    }
+
+    public void validateDuplicateMenu(String menuName) {
+        List<String> menuNames = Arrays.stream(menuName.split(","))
+                .map(menuNameAndCount -> menuNameAndCount.split("-")[0].trim())
+                .toList();
+        if (menuNames.size() != menuNames.stream().distinct().count()) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_ORDER +
+                    "\n" +
+                    ErrorMessage.INVALID_DUPLICATE_MENU.getReasonFormattedMessage());
+        }
     }
 }
