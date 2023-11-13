@@ -103,4 +103,8 @@ public class Menu {
     public boolean isTotalPriceTenThousandOrMore() {
         return getTotalMenuPrice() >= EVENT_APPLY_PRICE;
     }
+
+    public int mainMenuCount() {
+        return 0;
+    }
 }
