@@ -35,4 +35,11 @@ public class MenuTest {
     void invalidOnlyBeverage(String menuInput) {
         assertThatIllegalArgumentException().isThrownBy(() -> new Menu(menuInput));
     }
+
+    @ParameterizedTest
+    @DisplayName("주문 메뉴가 20개가 넘으면 예외 발생")
+    @ValueSource(strings = {"해산물파스타-10,제로콜라-21", "티본스테이크-11,제로콜라-10", "크리스마스파스타-5,아이스크림-10,제로콜라-5,양송이수프-1"})
+    void menuCountLimits(String menuInput) {
+        assertThatIllegalArgumentException().isThrownBy(() -> new Menu(menuInput));
+    }
 }
