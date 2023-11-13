@@ -90,4 +90,8 @@ public class Menu {
                     ErrorMessage.INVALID_MENU_COUNT_LIMITS.getReasonFormattedMessage());
         }
     }
+
+    public int getTotalMenuPrice() {
+        return 0;
+    }
 }

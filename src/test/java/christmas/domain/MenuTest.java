@@ -2,8 +2,13 @@ package christmas.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 public class MenuTest {
@@ -41,5 +46,19 @@ public class MenuTest {
     @ValueSource(strings = {"해산물파스타-10,제로콜라-21", "티본스테이크-11,제로콜라-10", "크리스마스파스타-5,아이스크림-10,제로콜라-5,양송이수프-1"})
     void menuCountLimits(String menuInput) {
         assertThatIllegalArgumentException().isThrownBy(() -> new Menu(menuInput));
+    }
+
+    @ParameterizedTest
+    @DisplayName("총주문 금액 계산")
+    @MethodSource("menuSetting")
+    void calculateMenuPrice(Menu menu, int totalPrice) {
+        assertThat(menu.getTotalMenuPrice()).isEqualTo(totalPrice);
+    }
+
+    static Stream<Arguments> menuSetting() {
+        return Stream.of(
+                Arguments.arguments(new Menu("해산물파스타-1,제로콜라-1,티본스테이크-2"), 148_000),
+                Arguments.arguments(new Menu("아이스크림-1,제로콜라-1,양송이수프-2,크리스마스파스타-3,시저샐러드-4"), 128_000)
+        );
     }
 }
