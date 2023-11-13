@@ -120,6 +120,10 @@ public class Event {
         return getWeekdayDiscount() + getWeekendDiscount() + getSpecialDiscount() + getChristmasDDayDiscount();
     }
 
+    public int getTotalBenefitsAmount() {
+        return getTotalEventDiscount() + getTotalGiftAmount();
+    }
+
     public boolean isVisitDateChristmasDDay(VisitDate visitDate, EventCalendar eventCalendar) {
         return visitDate.isChristmasDDay(eventCalendar);
     }

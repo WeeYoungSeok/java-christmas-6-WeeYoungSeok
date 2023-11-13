@@ -1,10 +1,13 @@
 package christmas.view;
 
 import christmas.domain.Event;
+import christmas.domain.EventCalendar;
 import christmas.domain.Menu;
+import christmas.domain.contants.Badge;
 import christmas.util.EventCalculate;
 import christmas.view.contants.OutputMessage;
 
+import java.util.Arrays;
 import java.util.StringJoiner;
 
 public class OutputView {
@@ -101,6 +104,14 @@ public class OutputView {
                 )
         );
         System.out.println();
+    }
+
+    public static void printBadge(Event event, EventCalendar eventCalendar) {
+        System.out.println(String.format(OutputMessage.EVENT_BADGE.getFormattedMessage(), eventCalendar.getMonth()));
+        System.out.print(Arrays.stream(Badge.values())
+                .filter(badge -> badge.getWhichBadgeFromAmount(event.getTotalBenefitsAmount()))
+                .findFirst()
+                .orElse(Badge.NONE));
     }
 
     public static void printErrorMessage(String errorMessage) {

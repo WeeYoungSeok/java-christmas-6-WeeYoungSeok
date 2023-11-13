@@ -63,5 +63,6 @@ public class ChristmasPromotionController {
         OutputView.printBenefits(event);
         OutputView.printBenefitsAmount(event);
         OutputView.printAfterDiscount(menu, event);
+        OutputView.printBadge(event, eventCalendar);
     }
 }

@@ -23,4 +23,9 @@ public enum Badge {
     public boolean getWhichBadgeFromAmount(int amount) {
         return whichBadge.test(amount);
     }
+
+    @Override
+    public String toString() {
+        return badge;
+    }
 }
