@@ -98,4 +98,8 @@ public class Menu {
                 .mapToInt(menu -> menu.getKey().getPrice() * menu.getValue())
                 .sum();
     }
+
+    public boolean isTotalPriceTenThousandOrMore() {
+        return false;
+    }
 }

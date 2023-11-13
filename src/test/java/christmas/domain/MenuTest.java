@@ -1,6 +1,7 @@
 package christmas.domain;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -51,8 +52,21 @@ public class MenuTest {
     @ParameterizedTest
     @DisplayName("총주문 금액 계산")
     @MethodSource("menuSetting")
-    void calculateMenuPrice(Menu menu, int totalPrice) {
+    void calculateTotalMenuPrice(Menu menu, int totalPrice) {
         assertThat(menu.getTotalMenuPrice()).isEqualTo(totalPrice);
+    }
+
+    @ParameterizedTest
+    @DisplayName("총주문 금액이 10000원 이상이라면 true 반환")
+    @MethodSource("menuSetting")
+    void totalPriceTenThousandOrMore(Menu menu) {
+        assertThat(menu.isTotalPriceTenThousandOrMore()).isTrue();
+    }
+
+    @Test
+    @DisplayName("총주문 금액이 10000원 미만이라면 false 반환")
+    void totalPriceTenThousandUnder() {
+        assertThat(new Menu("시저샐러드-1").isTotalPriceTenThousandOrMore()).isFalse();
     }
 
     static Stream<Arguments> menuSetting() {
