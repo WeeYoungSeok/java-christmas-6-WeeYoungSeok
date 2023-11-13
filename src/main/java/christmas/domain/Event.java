@@ -1,6 +1,6 @@
 package christmas.domain;
 
-import christmas.domain.contants.EventDiscount;
+import christmas.domain.contants.event.EventDiscount;
 import christmas.domain.contants.menu.MenuGroup;
 
 import java.util.HashMap;
