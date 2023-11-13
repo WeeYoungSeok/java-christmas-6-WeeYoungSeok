@@ -28,6 +28,7 @@ public class Menu {
                     menuGroups.computeIfAbsent(validateInvalidMenuName(menuName).getTitle(), k -> new HashMap<>())
                             .put(MenuGroup.findMenu(menuName), validateMenuCount(menuCount));
                 });
+        validateOnlyBeverage(menuGroups);
         return menuGroups;
     }
 
@@ -67,6 +68,13 @@ public class Menu {
             throw new IllegalArgumentException(ErrorMessage.INVALID_ORDER +
                     "\n" +
                     ErrorMessage.INVALID_DUPLICATE_MENU.getReasonFormattedMessage());
+        }
+    }
+
+    public void validateOnlyBeverage(Map<String, Map<MenuInterface, Integer>> menuGroups) {
+        if (menuGroups.entrySet().stream()
+                .allMatch(entry -> entry.getKey().equals(MenuGroup.BEVERAGE.getTitle()))) {
+            throw new IllegalArgumentException();
         }
     }
 }
