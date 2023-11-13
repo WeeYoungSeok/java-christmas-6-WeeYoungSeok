@@ -1,5 +1,6 @@
 package christmas.domain;
 
+import christmas.domain.contants.Gift;
 import christmas.domain.contants.event.EventDiscount;
 import christmas.domain.contants.event.EventValue;
 import org.assertj.core.api.Assertions;
@@ -9,6 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -76,11 +78,11 @@ public class EventTest {
         return Stream.of(
                 Arguments.arguments(
                         VisitDate.of(10, eventCalendar),
-                        new Menu("초코케이크-3,티본스테이크-2")
-                        , EventDiscount.WEEKDAY.getDiscount() * 3
+                        new Menu("초코케이크-3,티본스테이크-2"),
+                        EventDiscount.WEEKDAY.getDiscount() * 3
                 ),
                 Arguments.arguments(VisitDate.of(
-                        27, eventCalendar),
+                                27, eventCalendar),
                         new Menu("아이스크림-2,해산물파스타-2"),
                         EventDiscount.WEEKDAY.getDiscount() * 2
                 )
@@ -98,8 +100,8 @@ public class EventTest {
         return Stream.of(
                 Arguments.arguments(
                         VisitDate.of(1, eventCalendar),
-                        new Menu("초코케이크-3,티본스테이크-5")
-                        , EventDiscount.WEEKEND.getDiscount() * 5
+                        new Menu("초코케이크-3,티본스테이크-5"),
+                        EventDiscount.WEEKEND.getDiscount() * 5
                 ),
                 Arguments.arguments(VisitDate.of(
                                 16, eventCalendar),
@@ -120,13 +122,39 @@ public class EventTest {
         return Stream.of(
                 Arguments.arguments(
                         VisitDate.of(3, eventCalendar),
-                        new Menu("초코케이크-3,티본스테이크-5")
-                        , EventDiscount.SPECIAL.getDiscount()
+                        new Menu("초코케이크-3,티본스테이크-5"),
+                        EventDiscount.SPECIAL.getDiscount()
                 ),
                 Arguments.arguments(VisitDate.of(
                                 10, eventCalendar),
                         new Menu("아이스크림-2,해산물파스타-4"),
                         EventDiscount.SPECIAL.getDiscount()
+                )
+        );
+    }
+
+    @ParameterizedTest
+    @DisplayName("총주문 금액 120_000원 이상이라면 샴페인 증정")
+    @MethodSource("giftArgumentsSetting")
+    void isGiftFromMenuTotalPrice(Menu menu, Gift expectedGift) {
+        org.junit.jupiter.api.Assertions.assertEquals(
+                expectedGift,
+                Arrays.stream(Gift.values())
+                        .filter(giftEnum -> giftEnum.isGiftApplicable(menu.getTotalMenuPrice()))
+                        .findFirst()
+                        .orElse(Gift.NONE)
+        );
+    }
+
+    static Stream<Arguments> giftArgumentsSetting() {
+        return Stream.of(
+                Arguments.arguments(
+                        new Menu("초코케이크-3,티본스테이크-5"),
+                        Gift.CHAMPAGNE
+                ),
+                Arguments.arguments(
+                        new Menu("아이스크림-2,해산물파스타-4"),
+                        Gift.CHAMPAGNE
                 )
         );
     }
