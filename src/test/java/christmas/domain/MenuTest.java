@@ -28,4 +28,11 @@ public class MenuTest {
     void invalidDuplicateMenu(String menuInput) {
         assertThatIllegalArgumentException().isThrownBy(() -> new Menu(menuInput));
     }
+
+    @ParameterizedTest
+    @DisplayName("음료만 주문시 예외 발생")
+    @ValueSource(strings = {"제로콜라-1", "제로콜라-1,레드와인-1", "제로콜라-1,레드와인-1,샴페인-1"})
+    void invalidOnlyBeverage(String menuInput) {
+        assertThatIllegalArgumentException().isThrownBy(() -> new Menu(menuInput));
+    }
 }
