@@ -1,6 +1,7 @@
 package christmas.domain;
 
 import christmas.domain.contants.event.EventValue;
+import christmas.message.ErrorMessage;
 
 public class VisitDate {
     private final int visitDay;
@@ -20,7 +21,9 @@ public class VisitDate {
 
     public static void validateDayInMonth(final int visitDay, final int firstDay, final int endDay) {
         if (visitDay < firstDay || visitDay > endDay) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(
+                    String.format(ErrorMessage.OUT_OF_RANGE_DATE.getReasonFormattedMessage(), firstDay, endDay)
+            );
         }
     }
 

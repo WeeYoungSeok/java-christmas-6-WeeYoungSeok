@@ -1,15 +1,15 @@
 package christmas.util;
 
-public class NumericConverter implements Converter<String, Integer> {
+import christmas.message.ErrorMessage;
 
-    private static final String ERROR_MESSAGE = "숫자가 아닙니다.";
+public class NumericConverter implements Converter<String, Integer> {
 
     @Override
     public Integer convert(String target) {
         try {
             return Integer.parseInt(target);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(ERROR_MESSAGE);
+            throw new IllegalArgumentException(ErrorMessage.INVALID_NUMBER.getReasonFormattedMessage());
         }
     }
 }
