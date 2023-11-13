@@ -33,4 +33,26 @@ public class EventTest {
                 )
         );
     }
+
+    @ParameterizedTest
+    @DisplayName("입력 받은 날짜가 주말이라면 메인 메뉴 1개당 2023원 할인 적용")
+    @MethodSource("weekendSetting")
+    void isWeekendDiscount(VisitDate visitDate, Menu menu, int discount) {
+        Assertions.assertThat(new Event(visitDate, eventCalendar, menu).getWeekendDiscount()).isEqualTo(discount);
+    }
+
+    static Stream<Arguments> weekendSetting() {
+        return Stream.of(
+                Arguments.arguments(
+                        VisitDate.of(1, eventCalendar),
+                        new Menu("초코케이크-3,티본스테이크-5")
+                        , EventDiscount.WEEKEND.getDiscount() * 5
+                ),
+                Arguments.arguments(VisitDate.of(
+                                16, eventCalendar),
+                        new Menu("아이스크림-2,해산물파스타-4"),
+                        EventDiscount.WEEKEND.getDiscount() * 4
+                )
+        );
+    }
 }

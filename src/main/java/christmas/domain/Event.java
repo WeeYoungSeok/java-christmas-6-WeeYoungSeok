@@ -16,6 +16,7 @@ public class Event {
     public Map<EventDiscount, Integer> eventDiscountSetting(VisitDate visitDate, EventCalendar eventCalendar, Menu menu) {
         Map<EventDiscount, Integer> eventDiscounts = new HashMap<>();
         weekdayDiscountSetting(visitDate, eventCalendar, menu, eventDiscounts);
+        weekendDiscountSetting(visitDate, eventCalendar, menu, eventDiscounts);
         return eventDiscounts;
     }
 
@@ -25,10 +26,25 @@ public class Event {
         }
     }
 
+    public void weekendDiscountSetting(VisitDate visitDate, EventCalendar eventCalendar, Menu menu, Map<EventDiscount, Integer> eventDiscounts) {
+        if (visitDate.isWeekend(eventCalendar)) {
+            eventDiscounts.put(EventDiscount.WEEKEND, menu.categoryMenuCount(MenuGroup.MAIN));
+        }
+    }
+
+
     public int getWeekdayDiscount() {
         return this.eventDiscountGroup.entrySet()
                 .stream()
                 .filter(entry -> entry.getKey().equals(EventDiscount.WEEKDAY))
+                .mapToInt(entry -> entry.getValue() * entry.getKey().getDiscount())
+                .sum();
+    }
+
+    public int getWeekendDiscount() {
+        return this.eventDiscountGroup.entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().equals(EventDiscount.WEEKEND))
                 .mapToInt(entry -> entry.getValue() * entry.getKey().getDiscount())
                 .sum();
     }
