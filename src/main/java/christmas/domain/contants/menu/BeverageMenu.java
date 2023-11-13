@@ -1,7 +1,5 @@
 package christmas.domain.contants.menu;
 
-import java.util.function.Function;
-
 public enum BeverageMenu implements MenuInterface {
     ZERO_COLA("제로콜라", 3_000),
     RED_WINE("레드와인", 60_000),
@@ -9,8 +7,6 @@ public enum BeverageMenu implements MenuInterface {
 
     private final String name;
     private final int price;
-    private final boolean gift;
-    private final Function<Integer, Boolean> giftApplicable;
 
     BeverageMenu(String name, int price) {
         this.name = name;

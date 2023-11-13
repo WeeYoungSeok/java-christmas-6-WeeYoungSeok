@@ -12,5 +12,4 @@ public class NumericConverter implements Converter<String, Integer> {
             throw new IllegalArgumentException(ERROR_MESSAGE);
         }
     }
-
 }
