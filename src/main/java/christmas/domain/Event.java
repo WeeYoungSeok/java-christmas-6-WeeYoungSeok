@@ -6,6 +6,7 @@ import christmas.domain.contants.event.EventValue;
 import christmas.domain.contants.menu.MenuGroup;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -111,5 +112,13 @@ public class Event {
 
     public boolean isVisitDateAllDateEvent(VisitDate visitDate, EventCalendar eventCalendar) {
         return visitDate.containsAllDay(eventCalendar);
+    }
+
+    public Map<EventDiscount, Integer> getEventDiscountGroup() {
+        return Collections.unmodifiableMap(eventDiscountGroup);
+    }
+
+    public Map<Gift, Integer> getGifts() {
+        return Collections.unmodifiableMap(gifts);
     }
 }
