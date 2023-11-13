@@ -17,6 +17,7 @@ public class Event {
         Map<EventDiscount, Integer> eventDiscounts = new HashMap<>();
         weekdayDiscountSetting(visitDate, eventCalendar, menu, eventDiscounts);
         weekendDiscountSetting(visitDate, eventCalendar, menu, eventDiscounts);
+
         return eventDiscounts;
     }
 
@@ -47,5 +48,9 @@ public class Event {
                 .filter(entry -> entry.getKey().equals(EventDiscount.WEEKEND))
                 .mapToInt(entry -> entry.getValue() * entry.getKey().getDiscount())
                 .sum();
+    }
+
+    public boolean isVisitDateChristmasDDay(VisitDate visitDate, EventCalendar eventCalendar) {
+        return false;
     }
 }
