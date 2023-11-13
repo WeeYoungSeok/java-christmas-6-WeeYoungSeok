@@ -18,7 +18,7 @@ public class EventCalendar {
     }
 
     public boolean isChristmasDDay(int day) {
-        return day >= EventValue.CHRISTMAS_START_DAY.getValue() || day <= EventValue.CHRISTMAS_END_DAY.getValue();
+        return day >= EventValue.CHRISTMAS_START_DAY.getValue() && day <= EventValue.CHRISTMAS_END_DAY.getValue();
     }
 
     public int getYear() {

@@ -1,6 +1,7 @@
 package christmas.domain;
 
 import christmas.domain.contants.event.EventDiscount;
+import christmas.domain.contants.event.EventValue;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,20 +15,37 @@ public class EventTest {
 
     @ParameterizedTest
     @DisplayName("입력 받은 날짜가 크리스마스 디데이 기간이라면 true")
-    @MethodSource("weekdaySetting")
+    @MethodSource("christmasDDaySetting")
     void isChristmasDDay(VisitDate visitDate, Menu menu) {
         Assertions.assertThat(new Event(visitDate, eventCalendar, menu).isVisitDateChristmasDDay(visitDate, eventCalendar)).isTrue();
+    }
+
+    @ParameterizedTest
+    @DisplayName("입력 받은 날짜가 크리스마스 디데이 기간을 계산하여 할인값 계산")
+    @MethodSource("christmasDDaySetting")
+    void isChristmasDDayDiscount(VisitDate visitDate, Menu menu, int discount) {
+        Assertions.assertThat(new Event(visitDate, eventCalendar, menu).christmasDDayCalculate(visitDate)).isEqualTo(discount);
     }
 
     static Stream<Arguments> christmasDDaySetting() {
         return Stream.of(
                 Arguments.arguments(
                         VisitDate.of(18, eventCalendar),
-                        new Menu("초코케이크-3,티본스테이크-2")
+                        new Menu("초코케이크-3,티본스테이크-2"),
+                        EventDiscount.CHRISTMAS.getDiscount() +
+                                (
+                                        (18 - EventValue.CHRISTMAS_START_DAY.getValue()) *
+                                                EventValue.CHRISTMAS_ON_THE_RISE_FORM_DAY.getValue()
+                                )
                 ),
                 Arguments.arguments(VisitDate.of(
                                 23, eventCalendar),
-                        new Menu("아이스크림-2,해산물파스타-2")
+                        new Menu("아이스크림-2,해산물파스타-2"),
+                        EventDiscount.CHRISTMAS.getDiscount() +
+                                (
+                                        (23 - EventValue.CHRISTMAS_START_DAY.getValue()) *
+                                                EventValue.CHRISTMAS_ON_THE_RISE_FORM_DAY.getValue()
+                                )
                 )
         );
     }
