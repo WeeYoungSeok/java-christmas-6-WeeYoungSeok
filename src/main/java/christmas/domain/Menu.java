@@ -92,6 +92,10 @@ public class Menu {
     }
 
     public int getTotalMenuPrice() {
-        return 0;
+        return this.menus.values()
+                .stream()
+                .flatMap(menuGroup -> menuGroup.entrySet().stream())
+                .mapToInt(menu -> menu.getKey().getPrice() * menu.getValue())
+                .sum();
     }
 }

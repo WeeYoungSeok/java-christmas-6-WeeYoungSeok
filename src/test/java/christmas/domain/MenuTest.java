@@ -58,7 +58,7 @@ public class MenuTest {
     static Stream<Arguments> menuSetting() {
         return Stream.of(
                 Arguments.arguments(new Menu("해산물파스타-1,제로콜라-1,티본스테이크-2"), 148_000),
-                Arguments.arguments(new Menu("아이스크림-1,제로콜라-1,양송이수프-2,크리스마스파스타-3,시저샐러드-4"), 128_000)
+                Arguments.arguments(new Menu("아이스크림-1,제로콜라-1,양송이수프-2,크리스마스파스타-3,시저샐러드-4"), 127_000)
         );
     }
 }
