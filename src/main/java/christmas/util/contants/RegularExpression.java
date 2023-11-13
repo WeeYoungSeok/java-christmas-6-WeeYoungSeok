@@ -3,7 +3,7 @@ package christmas.util.contants;
 import christmas.message.ErrorMessage;
 
 public enum RegularExpression {
-    MENU_REGEX("(?:[^,-]+-[^,]+,)*[^,-]+-[^-]+");
+    MENU_REGEX("(?:[^,-]+-[^-,]+,)*[^,-]+-[^-,]+");
 
     private final String pattern;
 

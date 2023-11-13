@@ -60,5 +60,6 @@ public class ChristmasPromotionController {
         OutputView.printBeforeDiscountMenuTotalPrice(menu);
         this.event = new Event(visitDate, eventCalendar, menu, starDate);
         OutputView.printGift(event);
+        OutputView.printBenefits(event);
     }
 }

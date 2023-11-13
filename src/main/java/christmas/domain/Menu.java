@@ -46,7 +46,7 @@ public class Menu {
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_MENU_COUNT.getReasonFormattedMessage());
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_MINIMUM_MENU_COUNT.getReasonFormattedMessage());
+            throw new IllegalArgumentException(e.getMessage());
 
         }
     }

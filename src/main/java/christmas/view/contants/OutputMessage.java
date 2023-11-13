@@ -8,6 +8,7 @@ public enum OutputMessage {
     BEFORE_DISCOUNT_TOTAL_PRICE("할인 전 총주문 금액"),
     PRICE("%,d원"),
     GIFT_MENU("증정 메뉴"),
+    GIFT_EVENT("증정 이벤트: "),
     BENEFITS_HISTORY("혜택 내역"),
     TOTAL_BENEFITS_AMOUNT("총혜택 금액"),
     AFTER_DISCOUNT_EXPECTED_PAY_AMOUNT("할인 후 예상 결제 금액"),

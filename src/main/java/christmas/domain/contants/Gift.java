@@ -3,7 +3,6 @@ package christmas.domain.contants;
 import java.util.function.Function;
 
 public enum Gift {
-    NONE("없음", 0, 0, false, (amount) -> false),
     CHAMPAGNE("샴페인", 25_000, 1, true, (amount) -> amount >= 120_000);
 
     private final String name;

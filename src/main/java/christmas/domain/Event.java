@@ -29,8 +29,6 @@ public class Event {
             specialDiscountSetting(visitDate, starDate, eventDiscounts);
             return eventDiscounts;
         }
-        Arrays.stream(EventDiscount.values())
-                .forEach(eventDiscount -> eventDiscounts.put(eventDiscount, 0));
         return eventDiscounts;
     }
 
@@ -42,9 +40,6 @@ public class Event {
                     .filter(gift -> gift.isGiftApplicable(menu.getTotalMenuPrice()))
                     .filter(Gift::getGift)
                     .forEach(gift -> gifts.put(gift, gift.getCount() * gift.getPrice()));
-        }
-        if (gifts.isEmpty()) {
-            gifts.put(Gift.NONE, Gift.NONE.getPrice());
         }
         return gifts;
     }

@@ -9,7 +9,7 @@ public class NumericConverter implements Converter<String, Integer> {
         try {
             return Integer.parseInt(target);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_NUMBER.getReasonFormattedMessage());
+            throw new NumberFormatException(ErrorMessage.INVALID_NUMBER.getReasonFormattedMessage());
         }
     }
 }
