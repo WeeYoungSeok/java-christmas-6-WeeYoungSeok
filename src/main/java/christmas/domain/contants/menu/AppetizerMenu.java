@@ -9,14 +9,10 @@ public enum AppetizerMenu implements MenuInterface {
 
     private final String name;
     private final int price;
-    private final boolean gift;
-    private final Function<Integer, Boolean> giftApplicable;
 
-    AppetizerMenu(String name, int price, boolean gift, Function<Integer, Boolean> giftApplicable) {
+    AppetizerMenu(String name, int price) {
         this.name = name;
         this.price = price;
-        this.gift = gift;
-        this.giftApplicable = giftApplicable;
     }
 
     @Override
@@ -27,16 +23,6 @@ public enum AppetizerMenu implements MenuInterface {
     @Override
     public int getPrice() {
         return this.price;
-    }
-
-    @Override
-    public boolean getGift() {
-        return gift;
-    }
-
-    @Override
-    public boolean isGiftApplicable(int amount) {
-        return giftApplicable.apply(amount);
     }
 
     @Override
