@@ -24,13 +24,15 @@ public class Event {
 
     public void weekdayDiscountSetting(VisitDate visitDate, EventCalendar eventCalendar, Menu menu, Map<EventDiscount, Integer> eventDiscounts) {
         if (!visitDate.isWeekend(eventCalendar)) {
-            eventDiscounts.put(EventDiscount.WEEKDAY, menu.categoryMenuCount(MenuGroup.DESSERT));
+            eventDiscounts.put(EventDiscount.WEEKDAY,
+                    menu.categoryMenuCount(MenuGroup.DESSERT) * EventDiscount.WEEKDAY.getDiscount());
         }
     }
 
     public void weekendDiscountSetting(VisitDate visitDate, EventCalendar eventCalendar, Menu menu, Map<EventDiscount, Integer> eventDiscounts) {
         if (visitDate.isWeekend(eventCalendar)) {
-            eventDiscounts.put(EventDiscount.WEEKEND, menu.categoryMenuCount(MenuGroup.MAIN));
+            eventDiscounts.put(EventDiscount.WEEKEND,
+                    menu.categoryMenuCount(MenuGroup.MAIN) * EventDiscount.WEEKEND.getDiscount());
         }
     }
 
@@ -65,5 +67,9 @@ public class Event {
 
     public boolean isVisitDateChristmasDDay(VisitDate visitDate, EventCalendar eventCalendar) {
         return visitDate.isChristmasDDay(eventCalendar);
+    }
+
+    public boolean isVisitDateAllDateEvent(VisitDate visitDate, EventCalendar eventCalendar) {
+        return false;
     }
 }

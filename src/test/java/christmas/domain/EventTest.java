@@ -51,6 +51,13 @@ public class EventTest {
     }
 
     @ParameterizedTest
+    @DisplayName("입력 받은 날짜가 1 ~ 31일 사이라면 true 반환")
+    @MethodSource("weekdaySetting")
+    void isVisitDateAllDayEvent(VisitDate visitDate, Menu menu) {
+        Assertions.assertThat(new Event(visitDate, eventCalendar, menu).isVisitDateAllDateEvent(visitDate, eventCalendar)).isTrue();
+    }
+
+    @ParameterizedTest
     @DisplayName("입력 받은 날짜가 평일이라면 디저트 메뉴 1개당 2023원 할인 적용")
     @MethodSource("weekdaySetting")
     void isWeekdayDiscount(VisitDate visitDate, Menu menu, int discount) {
