@@ -21,6 +21,10 @@ public class EventCalendar {
         return day >= EventValue.CHRISTMAS_START_DAY.getValue() && day <= EventValue.CHRISTMAS_END_DAY.getValue();
     }
 
+    public boolean containsAllDay(int day) {
+        return day >= EventValue.DECEMBER_START_DAY.getValue() && day <= EventValue.DECEMBER_END_DAY.getValue();
+    }
+
     public int getYear() {
         return currentDate.getYear();
     }

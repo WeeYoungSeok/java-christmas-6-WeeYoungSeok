@@ -32,6 +32,10 @@ public class VisitDate {
         return eventCalendar.isChristmasDDay(this.visitDay);
     }
 
+    public boolean containsAllDay(EventCalendar eventCalendar) {
+        return eventCalendar.containsAllDay(this.visitDay);
+    }
+
     public int christmasDDayCalculate() {
         return this.visitDay - EventValue.CHRISTMAS_START_DAY.getValue();
     }
