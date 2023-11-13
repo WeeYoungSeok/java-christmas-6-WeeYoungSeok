@@ -21,13 +21,13 @@ public class StartDateTest {
     @DisplayName("입력한 날짜가 해당 년도, 해당 월의 날짜 중 별이 있는 날짜와 일치한다면 true 반환")
     @ValueSource(ints = {3, 10, 17, 24, 25, 31})
     void dateMatchesWithStar(int day) {
-        Assertions.assertThat(new StarDate(this.starDates, this.eventCalendar).visitDateContainsStarDates(day)).isTrue();
+        Assertions.assertThat(new StarDate(this.eventCalendar).visitDateContainsStarDates(day)).isTrue();
     }
 
     @ParameterizedTest
     @DisplayName("입력한 날짜가 해당 년도, 해당 월의 날짜 중 별이 있는 날짜와 일치하지 않는다면 false 반환")
     @ValueSource(ints = {1, 6, 12, 22, 23, 30})
     void dateDoesNotMatchWithStar(int day) {
-        Assertions.assertThat(new StarDate(this.starDates, this.eventCalendar).visitDateContainsStarDates(day)).isFalse();
+        Assertions.assertThat(new StarDate(this.eventCalendar).visitDateContainsStarDates(day)).isFalse();
     }
 }

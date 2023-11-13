@@ -1,18 +1,21 @@
 package christmas.domain;
 
+import christmas.domain.contants.event.EventDate;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
 public class StarDate {
     private final Set<Integer> starDates;
 
-    public StarDate(Set<Integer> starDates, EventCalendar eventCalendar) {
+    public StarDate(EventCalendar eventCalendar) {
         this.starDates = new HashSet<>() {{
             addAll(starDatesSettingWithSunday(eventCalendar));
-            addAll(starDates);
+            addAll(starDateSettingWithSpecialDay(eventCalendar));
         }};
     }
 
@@ -30,5 +33,13 @@ public class StarDate {
             currentSunday = currentSunday.plusWeeks(1);
         }
         return sundays;
+    }
+
+    public Set<Integer> starDateSettingWithSpecialDay(EventCalendar eventCalendar) {
+        return Arrays.stream(EventDate.values())
+                .filter(eventDate -> eventDate.getMonth() == eventCalendar.getMonth())
+                .findFirst()
+                .map(EventDate::getEventDates)
+                .orElse(EventDate.NONE.getEventDates());
     }
 }

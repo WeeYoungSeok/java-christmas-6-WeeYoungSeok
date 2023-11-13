@@ -1,8 +1,6 @@
 package christmas.controller;
 
-import christmas.domain.EventCalendar;
-import christmas.domain.Menu;
-import christmas.domain.VisitDate;
+import christmas.domain.*;
 import christmas.message.ErrorMessage;
 import christmas.view.InputView;
 import christmas.view.OutputView;
@@ -11,9 +9,12 @@ public class ChristmasPromotionController {
     private EventCalendar eventCalendar;
     private VisitDate visitDate;
     private Menu menu;
+    private Event event;
+    private StarDate starDate;
 
     public void run() {
         eventCalendarSetting(2023, 12);
+        starDateSetting();
         visitDate();
         menuSetting();
         result();
@@ -21,6 +22,10 @@ public class ChristmasPromotionController {
 
     private void eventCalendarSetting(int year, int month) {
         this.eventCalendar = new EventCalendar(year, month);
+    }
+
+    private void starDateSetting() {
+        this.starDate = new StarDate(eventCalendar);
     }
 
     private void visitDate() {
