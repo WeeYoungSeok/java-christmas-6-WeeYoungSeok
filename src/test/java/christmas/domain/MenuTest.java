@@ -23,7 +23,7 @@ public class MenuTest {
     }
 
     @ParameterizedTest
-    @DisplayName("메뉴의 개수가 1이상의 숫자가 아니라면 예외 발생")
+    @DisplayName("메뉴가 중복으로 입력된다면 예외 발생")
     @ValueSource(strings = {"해산물파스타-1,제로콜라-1,제로콜라-1", "티본스테이크-2,티본스테이크-1"})
     void invalidDuplicateMenu(String menuInput) {
         assertThatIllegalArgumentException().isThrownBy(() -> new Menu(menuInput));
