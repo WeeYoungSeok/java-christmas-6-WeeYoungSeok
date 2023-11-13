@@ -14,13 +14,14 @@ public class Menu {
     private final Map<String, Map<MenuInterface, Integer>> menus;
 
     public Menu(String menuInput) {
-        validateDuplicateMenu(menuInput);
-        this.menus = menuSettingAndValidate(menuInput);
+        String[] menuCommaSplit = menuInput.split(",");
+        validateDuplicateMenu(menuCommaSplit);
+        this.menus = menuSettingAndValidate(menuCommaSplit);
     }
 
-    public Map<String, Map<MenuInterface, Integer>> menuSettingAndValidate(String menuInput) {
+    public Map<String, Map<MenuInterface, Integer>> menuSettingAndValidate(String[] menuNameAndCountArr) {
         Map<String, Map<MenuInterface, Integer>> menuGroups = new HashMap<>();
-        Arrays.stream(menuInput.split(","))
+        Arrays.stream(menuNameAndCountArr)
                 .forEach(menuNameAndCount -> {
                     String menuName = menuNameAndCount.split("-")[0];
                     String menuCount = menuNameAndCount.split("-")[1];
@@ -58,9 +59,9 @@ public class Menu {
         return menuCount;
     }
 
-    public void validateDuplicateMenu(String menuName) {
-        List<String> menuNames = Arrays.stream(menuName.split(","))
-                .map(menuNameAndCount -> menuNameAndCount.split("-")[0].trim())
+    public void validateDuplicateMenu(String[] menuNameAndCount) {
+        List<String> menuNames = Arrays.stream(menuNameAndCount)
+                .map(nameAndCount -> nameAndCount.split("-")[0].trim())
                 .toList();
         if (menuNames.size() != menuNames.stream().distinct().count()) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_ORDER +
