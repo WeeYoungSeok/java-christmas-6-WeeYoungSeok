@@ -11,16 +11,17 @@ import java.util.Map;
 public class Event {
     private final Map<EventDiscount, Integer> eventDiscountGroup;
 
-    public Event(VisitDate visitDate, EventCalendar eventCalendar, Menu menu) {
-        this.eventDiscountGroup = eventDiscountSetting(visitDate, eventCalendar, menu);
+    public Event(VisitDate visitDate, EventCalendar eventCalendar, Menu menu, StarDate starDate) {
+        this.eventDiscountGroup = eventDiscountSetting(visitDate, eventCalendar, starDate, menu);
     }
 
-    public Map<EventDiscount, Integer> eventDiscountSetting(VisitDate visitDate, EventCalendar eventCalendar, Menu menu) {
+    public Map<EventDiscount, Integer> eventDiscountSetting(VisitDate visitDate, EventCalendar eventCalendar, StarDate starDate, Menu menu) {
         Map<EventDiscount, Integer> eventDiscounts = new HashMap<>();
         if (menu.getTotalMenuPrice() >= EventValue.ORDER_MIN_PRICE.getValue()) {
             weekdayDiscountSetting(visitDate, eventCalendar, menu, eventDiscounts);
             weekendDiscountSetting(visitDate, eventCalendar, menu, eventDiscounts);
             christmasDDayDiscountSetting(visitDate, eventCalendar, eventDiscounts);
+            specialDiscountSetting(visitDate, starDate, eventDiscounts);
             return eventDiscounts;
         }
         Arrays.stream(EventDiscount.values())
@@ -48,6 +49,12 @@ public class Event {
         }
     }
 
+    public void specialDiscountSetting(VisitDate visitDate, StarDate starDate, Map<EventDiscount, Integer> eventDiscounts) {
+        if (visitDate.containsStarDate(starDate)) {
+            eventDiscounts.put(EventDiscount.SPECIAL, EventDiscount.SPECIAL.getDiscount());
+        }
+    }
+
     public int christmasDDayCalculate(VisitDate visitDate) {
         return EventDiscount.CHRISTMAS.getDiscount() +
                 (EventValue.CHRISTMAS_ON_THE_RISE_FORM_DAY.getValue() *
@@ -59,7 +66,7 @@ public class Event {
         return this.eventDiscountGroup.entrySet()
                 .stream()
                 .filter(entry -> entry.getKey().equals(EventDiscount.WEEKDAY))
-                .mapToInt(entry -> entry.getValue() * entry.getKey().getDiscount())
+                .mapToInt(Map.Entry::getValue)
                 .sum();
     }
 
@@ -67,7 +74,15 @@ public class Event {
         return this.eventDiscountGroup.entrySet()
                 .stream()
                 .filter(entry -> entry.getKey().equals(EventDiscount.WEEKEND))
-                .mapToInt(entry -> entry.getValue() * entry.getKey().getDiscount())
+                .mapToInt(Map.Entry::getValue)
+                .sum();
+    }
+
+    public int getSpecialDiscount() {
+        return this.eventDiscountGroup.entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().equals(EventDiscount.SPECIAL))
+                .mapToInt(Map.Entry::getValue)
                 .sum();
     }
 

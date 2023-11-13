@@ -25,8 +25,7 @@ public class StarDate {
         Set<Integer> sundays = new HashSet<>();
         LocalDate currentSunday = localDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.SUNDAY));
 
-        while (!localDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.SUNDAY))
-                .isAfter(localDate.with(TemporalAdjusters.lastInMonth(DayOfWeek.SUNDAY)))) {
+        while (!currentSunday.isAfter(localDate.with(TemporalAdjusters.lastInMonth(DayOfWeek.SUNDAY)))) {
             sundays.add(currentSunday.getDayOfMonth());
             currentSunday = currentSunday.plusWeeks(1);
         }

@@ -39,4 +39,8 @@ public class VisitDate {
     public int christmasDDayCalculate() {
         return this.visitDay - EventValue.CHRISTMAS_START_DAY.getValue();
     }
+
+    public boolean containsStarDate(StarDate starDate) {
+        return starDate.visitDateContainsStarDates(this.visitDay);
+    }
 }
