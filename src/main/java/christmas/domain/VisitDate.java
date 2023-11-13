@@ -21,4 +21,8 @@ public class VisitDate {
             throw new IllegalArgumentException();
         }
     }
+
+    public boolean isWeekend(EventCalendar eventCalendar) {
+        return eventCalendar.isWeekend(this.visitDay);
+    }
 }
