@@ -6,6 +6,7 @@ public enum OutputMessage {
     SUFFIX(">"),
     ORDER_MENU("주문 메뉴"),
     BEFORE_DISCOUNT_TOTAL_PRICE("할인 전 총주문 금액"),
+    PRICE("%,d원"),
     GIFT_MENU("증정 메뉴"),
     BENEFITS_HISTORY("혜택 내역"),
     TOTAL_BENEFITS_AMOUNT("총혜택 금액"),

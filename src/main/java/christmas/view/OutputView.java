@@ -12,7 +12,12 @@ public class OutputView {
     public static void printMenu(Menu menu) {
         System.out.println(OutputMessage.ORDER_MENU.getFormattedMessage());
         System.out.println(menu);
+        System.out.println();
+    }
 
+    public static void printBeforeDiscountMenuTotalPrice(Menu menu) {
+        System.out.println(OutputMessage.BEFORE_DISCOUNT_TOTAL_PRICE.getFormattedMessage());
+        System.out.println(String.format(OutputMessage.PRICE.getMessage(), menu.getTotalMenuPrice()));
     }
 
     public static void printErrorMessage(String errorMessage) {

@@ -52,5 +52,6 @@ public class ChristmasPromotionController {
 
     private void result() {
         OutputView.printMenu(menu);
+        OutputView.printBeforeDiscountMenuTotalPrice(menu);
     }
 }
