@@ -1,5 +1,6 @@
 package christmas.domain;
 
+import christmas.domain.contants.event.EventValue;
 import christmas.domain.contants.menu.MenuGroup;
 import christmas.domain.contants.menu.MenuInterface;
 import christmas.message.ErrorMessage;
@@ -12,7 +13,6 @@ import java.util.Map;
 
 public class Menu {
     private static final int MAX_MENU_COUNT = 20;
-    private static final int EVENT_APPLY_PRICE = 10000;
 
     private final Map<String, Map<MenuInterface, Integer>> menus;
 
@@ -101,7 +101,7 @@ public class Menu {
     }
 
     public boolean isTotalPriceTenThousandOrMore() {
-        return getTotalMenuPrice() >= EVENT_APPLY_PRICE;
+        return getTotalMenuPrice() >= EventValue.ORDER_MIN_PRICE.getValue();
     }
 
     public int categoryMenuCount(MenuGroup categoryMenu) {
