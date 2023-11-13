@@ -43,25 +43,21 @@ public class Menu {
     public int validateMenuCount(String menuCount) {
         NumericConverter numericConverter = new NumericConverter();
         try {
-            return validateMenuCountIsPositive(numericConverter.convert(menuCount));
+            int count = numericConverter.convert(menuCount);
+            validateMenuCountIsPositive(count);
+            return count;
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_MENU_COUNT.getReasonFormattedMessage());
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(
-                    ErrorMessage.INVALID_ORDER.getFormattedMessage() +
-                            "\n" +
-                            ErrorMessage.INVALID_MENU_COUNT.getMessage()
-            );
+            throw new IllegalArgumentException(ErrorMessage.INVALID_MINIMUM_MENU_COUNT.getReasonFormattedMessage());
+
         }
     }
 
-    public int validateMenuCountIsPositive(int menuCount) {
+    public void validateMenuCountIsPositive(int menuCount) {
         if (menuCount <= 0) {
-            throw new IllegalArgumentException(
-                    ErrorMessage.INVALID_ORDER.getFormattedMessage() +
-                            "\n" +
-                            ErrorMessage.INVALID_MINIMUM_MENU_COUNT.getMessage()
-            );
+            throw new IllegalArgumentException(ErrorMessage.INVALID_MINIMUM_MENU_COUNT.getMessage());
         }
-        return menuCount;
     }
 
     public void validateDuplicateMenu(String[] menuNameAndCount) {
@@ -69,16 +65,14 @@ public class Menu {
                 .map(nameAndCount -> nameAndCount.split("-")[0].trim())
                 .toList();
         if (menuNames.size() != menuNames.stream().distinct().count()) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_ORDER +
-                    "\n" +
-                    ErrorMessage.INVALID_DUPLICATE_MENU.getReasonFormattedMessage());
+            throw new IllegalArgumentException(ErrorMessage.INVALID_DUPLICATE_MENU.getReasonFormattedMessage());
         }
     }
 
     public void validateOnlyBeverage(Map<String, Map<MenuInterface, Integer>> menuGroups) {
         if (menuGroups.entrySet().stream()
                 .allMatch(entry -> entry.getKey().equals(MenuGroup.BEVERAGE.getTitle()))) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(ErrorMessage.INVALID_ONLY_BEVERAGE.getReasonFormattedMessage());
         }
     }
 
@@ -86,9 +80,7 @@ public class Menu {
         if (Arrays.stream(menuNameAndCount)
                 .mapToInt(nameAndCount -> validateMenuCount(nameAndCount.split("-")[1]))
                 .sum() > MAX_MENU_COUNT) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_ORDER +
-                    "\n" +
-                    ErrorMessage.INVALID_MENU_COUNT_LIMITS.getReasonFormattedMessage());
+            throw new IllegalArgumentException(ErrorMessage.INVALID_MENU_COUNT_LIMITS.getReasonFormattedMessage());
         }
     }
 

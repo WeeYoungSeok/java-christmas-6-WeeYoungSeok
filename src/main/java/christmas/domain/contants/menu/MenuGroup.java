@@ -4,6 +4,7 @@ import christmas.message.ErrorMessage;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.StringJoiner;
 
 public enum MenuGroup {
     APPETIZER("애피타이저", Arrays.asList(AppetizerMenu.values())),
@@ -33,7 +34,11 @@ public enum MenuGroup {
                 .flatMap(menuGroup -> menuGroup.getMenuItems().stream()
                         .filter(menu -> menu.getName().equals(menuName)))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.INVALID_ORDER.getFormattedMessage()));
+                .orElseThrow(() -> new IllegalArgumentException(
+                        ErrorMessage.MENU_NOT_FOUND.getReasonFormattedMessage()
+                                + "\n\n"
+                                + menuListString())
+                );
     }
 
     public static MenuGroup findMenuCategory(String menuName) {
@@ -41,6 +46,30 @@ public enum MenuGroup {
                 .filter(menuGroup -> menuGroup.getMenuItems().stream()
                         .anyMatch(menu -> menu.getName().equals(menuName)))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.INVALID_ORDER.getFormattedMessage()));
+                .orElseThrow(() -> new IllegalArgumentException(
+                        ErrorMessage.MENU_NOT_FOUND.getReasonFormattedMessage()
+                                + "\n\n"
+                                + menuListString())
+                );
+    }
+
+    public static String menuListString() {
+        StringJoiner output = new StringJoiner("\n");
+        output.add("메뉴 목록은 다음과 같습니다:");
+        Arrays.stream(MenuGroup.values())
+                .forEach(entry -> output.add(entry.toString()));
+        return output.toString().substring(0, output.length() -1);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("<").append(title).append(">\n");
+        StringJoiner stringJoiner = new StringJoiner(", ");
+        menuItems.forEach(item ->
+                stringJoiner.add(item.toString())
+        );
+        stringBuilder.append(stringJoiner).append("\n");
+        return stringBuilder.toString();
     }
 }
