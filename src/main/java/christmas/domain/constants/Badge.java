@@ -1,4 +1,4 @@
-package christmas.domain.contants;
+package christmas.domain.constants;
 
 import java.util.function.Predicate;
 

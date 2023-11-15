@@ -1,14 +1,14 @@
-package christmas.domain.contants.menu;
+package christmas.domain.constants.menu;
 
-public enum BeverageMenu implements MenuInterface {
-    ZERO_COLA("제로콜라", 3_000),
-    RED_WINE("레드와인", 60_000),
-    CHAMPAGNE("샴페인", 25_000);
+public enum AppetizerMenu implements MenuInterface {
+    MUSHROOM_CREAM_SOUP("양송이수프", 6_000),
+    TAPAS("타파스", 5_500),
+    CAESAR_SALAD("시저샐러드", 8_000);
 
     private final String name;
     private final int price;
 
-    BeverageMenu(String name, int price) {
+    AppetizerMenu(String name, int price) {
         this.name = name;
         this.price = price;
     }

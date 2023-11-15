@@ -1,4 +1,4 @@
-package christmas.domain.contants.event;
+package christmas.domain.constants.event;
 
 public enum EventDiscount {
     WEEKDAY("평일 할인", 2023),

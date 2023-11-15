@@ -1,11 +1,11 @@
 package christmas.domain;
 
-import christmas.domain.contants.event.EventValue;
-import christmas.domain.contants.menu.MenuGroup;
-import christmas.domain.contants.menu.MenuInterface;
+import christmas.domain.constants.event.EventValue;
+import christmas.domain.constants.menu.MenuGroup;
+import christmas.domain.constants.menu.MenuInterface;
 import christmas.message.ErrorMessage;
 import christmas.util.NumericConverter;
-import christmas.view.contants.OutputMessage;
+import christmas.view.constants.OutputMessage;
 
 import java.util.*;
 

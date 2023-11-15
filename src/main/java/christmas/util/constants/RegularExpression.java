@@ -1,4 +1,4 @@
-package christmas.util.contants;
+package christmas.util.constants;
 
 import christmas.message.ErrorMessage;
 

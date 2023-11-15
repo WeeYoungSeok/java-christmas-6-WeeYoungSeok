@@ -1,15 +1,13 @@
-package christmas.domain.contants.menu;
+package christmas.domain.constants.menu;
 
-public enum MainMenu implements MenuInterface {
-    T_BONE_STEAK("티본스테이크", 55_000),
-    BBQ_RIBS("바비큐립", 54_000),
-    SEAFOOD_PASTA("해산물파스타", 35_000),
-    CHRISTMAS_PASTA("크리스마스파스타", 25_000);
+public enum DessertMenu implements MenuInterface {
+    CHOCO_CAKE("초코케이크", 15_000),
+    ICE_CREAM("아이스크림", 5_000);
 
     private final String name;
     private final int price;
 
-    MainMenu(String name, int price) {
+    DessertMenu(String name, int price) {
         this.name = name;
         this.price = price;
     }

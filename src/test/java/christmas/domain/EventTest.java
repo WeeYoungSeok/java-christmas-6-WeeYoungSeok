@@ -1,9 +1,9 @@
 package christmas.domain;
 
-import christmas.domain.contants.Badge;
-import christmas.domain.contants.Gift;
-import christmas.domain.contants.event.EventDiscount;
-import christmas.domain.contants.event.EventValue;
+import christmas.domain.constants.Badge;
+import christmas.domain.constants.Gift;
+import christmas.domain.constants.event.EventDiscount;
+import christmas.domain.constants.event.EventValue;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

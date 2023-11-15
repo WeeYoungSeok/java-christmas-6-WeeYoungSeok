@@ -1,7 +1,7 @@
-package christmas.domain.contants.menu;
+package christmas.domain.constants.menu;
 
 import christmas.message.ErrorMessage;
-import christmas.view.contants.OutputMessage;
+import christmas.view.constants.OutputMessage;
 
 import java.util.Arrays;
 import java.util.List;

@@ -3,10 +3,10 @@ package christmas.view;
 import christmas.domain.Event;
 import christmas.domain.EventCalendar;
 import christmas.domain.Menu;
-import christmas.domain.contants.menu.MenuGroup;
+import christmas.domain.constants.menu.MenuGroup;
 import christmas.message.ErrorMessage;
 import christmas.util.EventCalculate;
-import christmas.view.contants.OutputMessage;
+import christmas.view.constants.OutputMessage;
 
 import java.util.Arrays;
 import java.util.StringJoiner;

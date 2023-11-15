@@ -1,4 +1,4 @@
-package christmas.view.contants;
+package christmas.view.constants;
 
 public enum OutputMessage {
     EMPTY(""),

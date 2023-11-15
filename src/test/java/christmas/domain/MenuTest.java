@@ -1,6 +1,6 @@
 package christmas.domain;
 
-import christmas.domain.contants.menu.MenuGroup;
+import christmas.domain.constants.menu.MenuGroup;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

@@ -1,4 +1,4 @@
-package christmas.domain.contants.event;
+package christmas.domain.constants.event;
 
 import java.util.Set;
 

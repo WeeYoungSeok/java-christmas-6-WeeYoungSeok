@@ -2,10 +2,10 @@ package christmas.view;
 
 import camp.nextstep.edu.missionutils.Console;
 import christmas.util.NumericConverter;
-import christmas.util.contants.RegularExpression;
+import christmas.util.constants.RegularExpression;
 import christmas.util.validation.CommonValidator;
-import christmas.view.contants.InputMessage;
-import christmas.view.contants.OutputMessage;
+import christmas.view.constants.InputMessage;
+import christmas.view.constants.OutputMessage;
 
 public class InputView {
     private static final NumericConverter numericConverter = new NumericConverter();

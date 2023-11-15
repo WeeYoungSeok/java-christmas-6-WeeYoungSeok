@@ -1,4 +1,4 @@
-package christmas.domain.contants.menu;
+package christmas.domain.constants.menu;
 
 public interface MenuInterface {
     String getName();

@@ -1,6 +1,6 @@
 package christmas.domain;
 
-import christmas.domain.contants.event.EventDate;
+import christmas.domain.constants.event.EventDate;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;

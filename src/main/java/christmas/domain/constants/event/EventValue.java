@@ -1,4 +1,4 @@
-package christmas.domain.contants.event;
+package christmas.domain.constants.event;
 
 public enum EventValue {
     ORDER_MIN_PRICE(10000),
