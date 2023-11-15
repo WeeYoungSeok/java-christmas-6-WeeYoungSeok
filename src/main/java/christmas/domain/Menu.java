@@ -16,8 +16,8 @@ public class Menu {
 
     public Menu(String menuInput) {
         String[] menuCommaSplit = menuInput.split(OutputMessage.COMMA.getMessage());
-        validateDuplicateMenu(menuCommaSplit);
         validateMenuCountLimits(menuCommaSplit);
+        validateDuplicateMenu(menuCommaSplit);
         this.menus = menuSetting(menuCommaSplit);
         validateOnlyBeverage();
     }
