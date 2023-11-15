@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
+import java.util.Map;
 import java.util.stream.Stream;
 
 public class EventTest {
@@ -26,14 +27,16 @@ public class EventTest {
     @DisplayName("입력 받은 날짜가 크리스마스 디데이 기간이라면 true")
     @MethodSource("christmasDDaySetting")
     void isChristmasDDay(VisitDate visitDate, Menu menu) {
-        Assertions.assertThat(new Event(visitDate, eventCalendar, menu, starDate).isVisitDateChristmasDDay(visitDate, eventCalendar)).isTrue();
+        Assertions.assertThat(new Event().isVisitDateChristmasDDay(visitDate, eventCalendar)).isTrue();
     }
 
     @ParameterizedTest
     @DisplayName("입력 받은 날짜가 크리스마스 디데이 기간을 계산하여 할인값 계산")
     @MethodSource("christmasDDaySetting")
     void isChristmasDDayDiscount(VisitDate visitDate, Menu menu, int discount) {
-        Assertions.assertThat(new Event(visitDate, eventCalendar, menu, starDate).christmasDDayCalculate(visitDate)).isEqualTo(discount);
+        Event event = new Event();
+        event.eventSetting(visitDate, eventCalendar, starDate, menu);
+        Assertions.assertThat(event.christmasDDayCalculate(visitDate)).isEqualTo(discount);
     }
 
     static Stream<Arguments> christmasDDaySetting() {
@@ -63,14 +66,21 @@ public class EventTest {
     @DisplayName("입력 받은 날짜가 1 ~ 31일 사이라면 true 반환")
     @MethodSource("weekdaySetting")
     void isVisitDateAllDayEvent(VisitDate visitDate, Menu menu) {
-        Assertions.assertThat(new Event(visitDate, eventCalendar, menu, starDate).isVisitDateAllDateEvent(visitDate, eventCalendar)).isTrue();
+        Event event = new Event();
+        Assertions.assertThat(event.isVisitDateAllDateEvent(visitDate, eventCalendar)).isTrue();
     }
 
     @ParameterizedTest
     @DisplayName("입력 받은 날짜가 평일이라면 디저트 메뉴 1개당 2023원 할인 적용")
     @MethodSource("weekdaySetting")
     void isWeekdayDiscount(VisitDate visitDate, Menu menu, int discount) {
-        Assertions.assertThat(new Event(visitDate, eventCalendar, menu, starDate).getWeekdayDiscount()).isEqualTo(discount);
+        Event event = new Event();
+        event.eventSetting(visitDate, eventCalendar, starDate, menu);
+        Assertions.assertThat(event.getEventDiscountGroup().entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().equals(EventDiscount.WEEKDAY))
+                .mapToInt(Map.Entry::getValue)
+                .sum()).isEqualTo(discount);
     }
 
     static Stream<Arguments> weekdaySetting() {
@@ -92,7 +102,13 @@ public class EventTest {
     @DisplayName("입력 받은 날짜가 주말이라면 메인 메뉴 1개당 2023원 할인 적용")
     @MethodSource("weekendSetting")
     void isWeekendDiscount(VisitDate visitDate, Menu menu, int discount) {
-        Assertions.assertThat(new Event(visitDate, eventCalendar, menu, starDate).getWeekendDiscount()).isEqualTo(discount);
+        Event event = new Event();
+        event.eventSetting(visitDate, eventCalendar, starDate, menu);
+        Assertions.assertThat(event.getEventDiscountGroup().entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().equals(EventDiscount.WEEKEND))
+                .mapToInt(Map.Entry::getValue)
+                .sum()).isEqualTo(discount);
     }
 
     static Stream<Arguments> weekendSetting() {
@@ -114,7 +130,13 @@ public class EventTest {
     @DisplayName("입력 받은 날짜가 별이 있다면 1000원 특별 할인 적용")
     @MethodSource("specialArgumentsSetting")
     void isSpecialDiscount(VisitDate visitDate, Menu menu, int discount) {
-        Assertions.assertThat(new Event(visitDate, eventCalendar, menu, starDate).getSpecialDiscount()).isEqualTo(discount);
+        Event event = new Event();
+        event.eventSetting(visitDate, eventCalendar, starDate, menu);
+        Assertions.assertThat(event.getEventDiscountGroup().entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().equals(EventDiscount.SPECIAL))
+                .mapToInt(Map.Entry::getValue)
+                .sum()).isEqualTo(discount);
     }
 
     static Stream<Arguments> specialArgumentsSetting() {

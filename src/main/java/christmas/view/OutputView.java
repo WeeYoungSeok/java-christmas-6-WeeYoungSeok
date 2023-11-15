@@ -50,11 +50,9 @@ public class OutputView {
         StringBuilder stringBuilder = new StringBuilder();
         event.getGifts().forEach((key, value) -> {
             stringBuilder.append(key.getName())
-                    .append(" ").append(key.getCount()).append("개");
+                    .append(OutputMessage.BLANK.getMessage()).append(key.getCount()).append("개");
         });
-        if (stringBuilder.isEmpty()) {
-            stringBuilder.append(OutputMessage.NONE.getMessage());
-        }
+        addBuilderNone();
         System.out.println(stringBuilder);
         System.out.println();
     }
@@ -62,49 +60,32 @@ public class OutputView {
     public static void printBenefits(Event event) {
         System.out.println(OutputMessage.BENEFITS_HISTORY.getFormattedMessage());
         printDiscount(event);
-        builderAndJoinerReset();
-        printGiftBenefits(event);
+        addBuilderNone();
+        System.out.println(stringBuilder);
         System.out.println();
     }
 
     public static void printDiscount(Event event) {
-        event.getEventDiscountGroup().entrySet()
-                .stream().filter(entry -> entry.getValue() != 0)
-                .forEach(entry-> stringJoiner.add(
-                        entry.getKey().getDiscountName() +
-                                OutputMessage.COLON.getMessage() + " " + OutputMessage.MINUS.getMessage() +
-                                String.format(OutputMessage.PRICE.getMessage(), entry.getValue())
+        event.getEventDiscountGroup().entrySet().stream()
+                .filter(entry -> entry.getValue() != 0)
+                .forEach(entry -> stringJoiner.add(
+                        entry.getKey().getDiscountName() + OutputMessage.COLON.getMessage() + OutputMessage.BLANK.getMessage() +
+                                String.format(OutputMessage.PRICE.getMessage(), eventCalculate.toNegative(entry.getValue()))
                 ));
         stringBuilder.append(stringJoiner);
-        if (stringBuilder.isEmpty()) {
-            stringBuilder.append(OutputMessage.NONE.getMessage());
-        }
-        System.out.println(stringBuilder);
-    }
-
-    public static void printGiftBenefits(Event event) {
-        event.getGifts().entrySet()
-                .stream().filter(entry -> entry.getValue() != 0)
-                .forEach(entry-> stringJoiner.add(
-                        OutputMessage.GIFT_EVENT.getMessage() +
-                                OutputMessage.COLON.getMessage() + " " + OutputMessage.MINUS.getMessage() +
-                                String.format(OutputMessage.PRICE.getMessage(), entry.getValue())
-                ));
-        stringBuilder.append(stringJoiner);
-        if (!stringBuilder.isEmpty()) {
-            System.out.println(stringBuilder);
-        }
     }
 
     public static void printBenefitsAmount(Event event) {
         System.out.println(OutputMessage.TOTAL_BENEFITS_AMOUNT.getFormattedMessage());
-        System.out.println(
-                OutputMessage.MINUS.getMessage() +
-                        String.format(
-                                OutputMessage.PRICE.getMessage(),
-                                eventCalculate.plus(event.getTotalEventDiscount(), event.getTotalGiftAmount())
+        System.out.println(String.format(
+                OutputMessage.PRICE.getMessage(),
+                eventCalculate.toNegative(
+                        eventCalculate.plus(
+                                event.getTotalEventDiscount(),
+                                event.getTotalGiftAmount()
                         )
-        );
+                )
+        ));
         System.out.println();
     }
 
@@ -131,8 +112,9 @@ public class OutputView {
         System.out.println(errorMessage);
     }
 
-    public static void builderAndJoinerReset() {
-        stringBuilder = new StringBuilder();
-        stringJoiner = new StringJoiner("\n");
+    public static void addBuilderNone() {
+        if (stringBuilder.isEmpty()) {
+            stringBuilder.append(OutputMessage.NONE.getMessage());
+        }
     }
 }

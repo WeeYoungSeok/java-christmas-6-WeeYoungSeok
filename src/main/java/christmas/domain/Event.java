@@ -15,58 +15,85 @@ public class Event {
     private final Map<Gift, Integer> gifts;
 
 
-    public Event(VisitDate visitDate, EventCalendar eventCalendar, Menu menu, StarDate starDate) {
-        this.eventDiscountGroup = eventDiscountSetting(visitDate, eventCalendar, starDate, menu);
-        this.gifts = giftSetting(visitDate, eventCalendar, menu);
+    public Event() {
+        this.eventDiscountGroup = initEventDiscounts();
+        this.gifts = initGifts();
     }
 
-    public Map<EventDiscount, Integer> eventDiscountSetting(VisitDate visitDate, EventCalendar eventCalendar, StarDate starDate, Menu menu) {
-        Map<EventDiscount, Integer> eventDiscounts = new HashMap<>();
+    private Map<EventDiscount, Integer> initEventDiscounts() {
+        Map<EventDiscount, Integer> result = new HashMap<>();
+        Arrays.stream(EventDiscount.values())
+                .forEach(rank -> result.put(rank, 0));
+        return result;
+    }
+
+    private Map<Gift, Integer> initGifts() {
+        return new HashMap<>();
+    }
+
+    public void eventSetting(VisitDate visitDate, EventCalendar eventCalendar, StarDate starDate, Menu menu) {
         if (menu.getTotalMenuPrice() >= EventValue.ORDER_MIN_PRICE.getValue()) {
-            weekdayDiscountSetting(visitDate, eventCalendar, menu, eventDiscounts);
-            weekendDiscountSetting(visitDate, eventCalendar, menu, eventDiscounts);
-            christmasDDayDiscountSetting(visitDate, eventCalendar, eventDiscounts);
-            specialDiscountSetting(visitDate, starDate, eventDiscounts);
-            return eventDiscounts;
+            giftSetting(visitDate, eventCalendar, menu);
+            eventDiscountSetting(visitDate, eventCalendar, starDate, menu);
         }
-        return eventDiscounts;
     }
 
-    public Map<Gift, Integer> giftSetting(VisitDate visitDate, EventCalendar eventCalendar, Menu menu) {
-        Map<Gift, Integer> gifts = new HashMap<>();
-        if (menu.getTotalMenuPrice() >= EventValue.ORDER_MIN_PRICE.getValue()
-                && isVisitDateAllDateEvent(visitDate, eventCalendar)) {
+    public void eventDiscountSetting(VisitDate visitDate, EventCalendar eventCalendar, StarDate starDate, Menu menu) {
+            weekdayDiscountSetting(visitDate, eventCalendar, menu);
+            weekendDiscountSetting(visitDate, eventCalendar, menu);
+            christmasDDayDiscountSetting(visitDate, eventCalendar);
+            specialDiscountSetting(visitDate, starDate);
+            eventDiscountGroupAddGift();
+    }
+
+    public void giftSetting(VisitDate visitDate, EventCalendar eventCalendar, Menu menu) {
+        if (isVisitDateAllDateEvent(visitDate, eventCalendar)) {
             Arrays.stream(Gift.values())
                     .filter(gift -> gift.isGiftApplicable(menu.getTotalMenuPrice()))
                     .filter(Gift::getGift)
                     .forEach(gift -> gifts.put(gift, gift.getCount() * gift.getPrice()));
         }
-        return gifts;
     }
 
-    public void weekdayDiscountSetting(VisitDate visitDate, EventCalendar eventCalendar, Menu menu, Map<EventDiscount, Integer> eventDiscounts) {
+    public void eventDiscountGroupAddGift() {
+        this.gifts.forEach((key, value) -> this.eventDiscountGroup.put(
+                EventDiscount.GIFT, this.eventDiscountGroup.getOrDefault(EventDiscount.GIFT, 0) + value
+        ));
+    }
+
+    public void weekdayDiscountSetting(VisitDate visitDate, EventCalendar eventCalendar, Menu menu) {
         if (!visitDate.isWeekend(eventCalendar) && isVisitDateAllDateEvent(visitDate, eventCalendar)) {
-            eventDiscounts.put(EventDiscount.WEEKDAY,
-                    menu.categoryMenuCount(MenuGroup.DESSERT) * EventDiscount.WEEKDAY.getDiscount());
+            this.eventDiscountGroup.put(EventDiscount.WEEKDAY,
+                    this.eventDiscountGroup.getOrDefault(
+                            EventDiscount.WEEKDAY, 0) +
+                            menu.categoryMenuCount(MenuGroup.DESSERT) * EventDiscount.WEEKDAY.getDiscount()
+                    );
         }
     }
 
-    public void weekendDiscountSetting(VisitDate visitDate, EventCalendar eventCalendar, Menu menu, Map<EventDiscount, Integer> eventDiscounts) {
+    public void weekendDiscountSetting(VisitDate visitDate, EventCalendar eventCalendar, Menu menu) {
         if (visitDate.isWeekend(eventCalendar) && isVisitDateAllDateEvent(visitDate, eventCalendar)) {
-            eventDiscounts.put(EventDiscount.WEEKEND,
+            this.eventDiscountGroup.put(EventDiscount.WEEKEND, this.eventDiscountGroup.getOrDefault(
+                    EventDiscount.WEEKEND, 0) +
                     menu.categoryMenuCount(MenuGroup.MAIN) * EventDiscount.WEEKEND.getDiscount());
         }
     }
 
-    public void christmasDDayDiscountSetting(VisitDate visitDate, EventCalendar eventCalendar, Map<EventDiscount, Integer> eventDiscounts) {
+    public void christmasDDayDiscountSetting(VisitDate visitDate, EventCalendar eventCalendar) {
         if (isVisitDateChristmasDDay(visitDate, eventCalendar)) {
-            eventDiscounts.put(EventDiscount.CHRISTMAS, christmasDDayCalculate(visitDate));
+            this.eventDiscountGroup.put(EventDiscount.CHRISTMAS,
+                    this.eventDiscountGroup.getOrDefault(
+                            EventDiscount.CHRISTMAS, 0) + christmasDDayCalculate(visitDate)
+            );
         }
     }
 
-    public void specialDiscountSetting(VisitDate visitDate, StarDate starDate, Map<EventDiscount, Integer> eventDiscounts) {
+    public void specialDiscountSetting(VisitDate visitDate, StarDate starDate) {
         if (visitDate.containsStarDate(starDate)) {
-            eventDiscounts.put(EventDiscount.SPECIAL, EventDiscount.SPECIAL.getDiscount());
+            this.eventDiscountGroup.put(EventDiscount.SPECIAL,
+                    this.eventDiscountGroup.getOrDefault(
+                            EventDiscount.SPECIAL, 0) + EventDiscount.SPECIAL.getDiscount()
+            );
         }
     }
 
@@ -74,39 +101,6 @@ public class Event {
         return EventDiscount.CHRISTMAS.getDiscount() +
                 (EventValue.CHRISTMAS_ON_THE_RISE_FORM_DAY.getValue() *
                         visitDate.christmasDDayCalculate());
-    }
-
-
-    public int getWeekdayDiscount() {
-        return this.eventDiscountGroup.entrySet()
-                .stream()
-                .filter(entry -> entry.getKey().equals(EventDiscount.WEEKDAY))
-                .mapToInt(Map.Entry::getValue)
-                .sum();
-    }
-
-    public int getWeekendDiscount() {
-        return this.eventDiscountGroup.entrySet()
-                .stream()
-                .filter(entry -> entry.getKey().equals(EventDiscount.WEEKEND))
-                .mapToInt(Map.Entry::getValue)
-                .sum();
-    }
-
-    public int getSpecialDiscount() {
-        return this.eventDiscountGroup.entrySet()
-                .stream()
-                .filter(entry -> entry.getKey().equals(EventDiscount.SPECIAL))
-                .mapToInt(Map.Entry::getValue)
-                .sum();
-    }
-
-    public int getChristmasDDayDiscount() {
-        return this.eventDiscountGroup.entrySet()
-                .stream()
-                .filter(entry -> entry.getKey().equals(EventDiscount.CHRISTMAS))
-                .mapToInt(Map.Entry::getValue)
-                .sum();
     }
 
     public int getTotalGiftAmount() {
@@ -117,11 +111,18 @@ public class Event {
     }
 
     public int getTotalEventDiscount() {
-        return getWeekdayDiscount() + getWeekendDiscount() + getSpecialDiscount() + getChristmasDDayDiscount();
+        return this.eventDiscountGroup.entrySet()
+                .stream()
+                .filter(entry -> entry.getKey() != EventDiscount.GIFT)
+                .mapToInt(Map.Entry::getValue)
+                .sum();
     }
 
     public int getTotalBenefitsAmount() {
-        return getTotalEventDiscount() + getTotalGiftAmount();
+        return this.eventDiscountGroup.values()
+                .stream()
+                .mapToInt(amount -> amount)
+                .sum();
     }
 
     public boolean isVisitDateChristmasDDay(VisitDate visitDate, EventCalendar eventCalendar) {

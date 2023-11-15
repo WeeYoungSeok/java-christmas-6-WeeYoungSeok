@@ -10,4 +10,8 @@ public class EventCalculate implements Calculate {
     public int minus(int x, int y) {
         return x - y;
     }
+
+    public int toNegative(int x) {
+        return -x;
+    }
 }

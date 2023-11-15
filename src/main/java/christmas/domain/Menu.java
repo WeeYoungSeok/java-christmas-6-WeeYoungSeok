@@ -5,6 +5,7 @@ import christmas.domain.contants.menu.MenuGroup;
 import christmas.domain.contants.menu.MenuInterface;
 import christmas.message.ErrorMessage;
 import christmas.util.NumericConverter;
+import christmas.view.contants.OutputMessage;
 
 import java.util.*;
 
@@ -105,7 +106,11 @@ public class Menu {
     public String toString() {
         StringJoiner stringJoiner = new StringJoiner("\n");
         this.menus.forEach((key, value) -> value.forEach((menu, count) ->
-                stringJoiner.add(menu.getName() + " " + count + "개")));
+                stringJoiner.add(
+                        menu.getName() +
+                                OutputMessage.BLANK.getMessage() +
+                                count + "개")
+        ));
         return stringJoiner.toString();
     }
 }
