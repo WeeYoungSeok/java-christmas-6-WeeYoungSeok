@@ -30,9 +30,12 @@ public class OutputView {
 
     public static void printMenuList(String errorMessage) {
         if (errorMessage.contains(ErrorMessage.MENU_NOT_FOUND.getMessage())) {
-            System.out.println();
-            System.out.println(OutputMessage.ORDER_LIST.getMessage());
-            System.out.println(MenuGroup.menuListString());
+            stringJoiner.add("");
+            stringJoiner.add(OutputMessage.ORDER_LIST.getMessage());
+            stringJoiner.add("");
+            Arrays.stream(MenuGroup.values())
+                    .forEach(menuGroup -> stringJoiner.add(menuGroup.toString()));
+            System.out.print(stringJoiner);
         }
     }
 

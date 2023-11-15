@@ -47,13 +47,6 @@ public enum MenuGroup {
                         ErrorMessage.MENU_NOT_FOUND.getReasonFormattedMessage()));
     }
 
-    public static String menuListString() {
-        StringJoiner output = new StringJoiner("\n");
-        Arrays.stream(MenuGroup.values())
-                .forEach(entry -> output.add(entry.toString()));
-        return output.toString().substring(0, output.length() -1);
-    }
-
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
