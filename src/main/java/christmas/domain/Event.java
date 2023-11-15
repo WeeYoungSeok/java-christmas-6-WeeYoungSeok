@@ -14,7 +14,6 @@ public class Event {
     private final Map<EventDiscount, Integer> eventDiscountGroup;
     private final Map<Gift, Integer> gifts;
 
-
     public Event() {
         this.eventDiscountGroup = initEventDiscounts();
         this.gifts = initGifts();

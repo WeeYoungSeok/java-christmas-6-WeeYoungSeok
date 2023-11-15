@@ -12,7 +12,6 @@ public enum MenuGroup {
     DESSERT("디저트", Arrays.asList(DessertMenu.values())),
     BEVERAGE("음료", Arrays.asList(BeverageMenu.values()));
 
-
     private final String title;
     private final List<MenuInterface> menuItems;
 
