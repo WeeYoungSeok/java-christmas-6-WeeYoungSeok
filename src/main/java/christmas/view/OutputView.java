@@ -4,6 +4,8 @@ import christmas.domain.Event;
 import christmas.domain.EventCalendar;
 import christmas.domain.Menu;
 import christmas.domain.contants.Badge;
+import christmas.domain.contants.menu.MenuGroup;
+import christmas.message.ErrorMessage;
 import christmas.util.EventCalculate;
 import christmas.view.contants.OutputMessage;
 
@@ -20,10 +22,18 @@ public class OutputView {
         System.out.println(OutputMessage.START.getMessage());
     }
 
-    public static void printMenu(Menu menu) {
+    public static void printMenuSelect(Menu menu) {
         System.out.println(OutputMessage.ORDER_MENU.getFormattedMessage());
         System.out.println(menu);
         System.out.println();
+    }
+
+    public static void printMenuList(String errorMessage) {
+        if (errorMessage.contains(ErrorMessage.MENU_NOT_FOUND.getMessage())) {
+            System.out.println();
+            System.out.println(OutputMessage.ORDER_LIST.getMessage());
+            System.out.println(MenuGroup.menuListString());
+        }
     }
 
     public static void printBeforeDiscountMenuTotalPrice(Menu menu) {

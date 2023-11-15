@@ -9,6 +9,7 @@ public enum OutputMessage {
     MINUS("-"),
     NONE("없음"),
     ORDER_MENU("주문 메뉴"),
+    ORDER_LIST("메뉴 목록은 다음과 같습니다"),
     BEFORE_DISCOUNT_TOTAL_PRICE("할인 전 총주문 금액"),
     PRICE("%,d원"),
     GIFT_MENU("증정 메뉴"),

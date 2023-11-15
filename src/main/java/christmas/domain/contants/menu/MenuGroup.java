@@ -35,10 +35,7 @@ public enum MenuGroup {
                         .filter(menu -> menu.getName().equals(menuName)))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(
-                        ErrorMessage.MENU_NOT_FOUND.getReasonFormattedMessage()
-                                + "\n\n"
-                                + menuListString())
-                );
+                        ErrorMessage.MENU_NOT_FOUND.getReasonFormattedMessage()));
     }
 
     public static MenuGroup findMenuCategory(String menuName) {
@@ -47,15 +44,11 @@ public enum MenuGroup {
                         .anyMatch(menu -> menu.getName().equals(menuName)))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(
-                        ErrorMessage.MENU_NOT_FOUND.getReasonFormattedMessage()
-                                + "\n\n"
-                                + menuListString())
-                );
+                        ErrorMessage.MENU_NOT_FOUND.getReasonFormattedMessage()));
     }
 
     public static String menuListString() {
         StringJoiner output = new StringJoiner("\n");
-        output.add("메뉴 목록은 다음과 같습니다:");
         Arrays.stream(MenuGroup.values())
                 .forEach(entry -> output.add(entry.toString()));
         return output.toString().substring(0, output.length() -1);

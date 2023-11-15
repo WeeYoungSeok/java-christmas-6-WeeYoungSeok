@@ -50,13 +50,14 @@ public class ChristmasPromotionController {
             } catch (IllegalArgumentException e) {
                 OutputView.printErrorMessage(ErrorMessage.INVALID_ORDER.getFormattedMessage());
                 System.out.println(e.getMessage());
+                OutputView.printMenuList(e.getMessage());
                 System.out.println();
             }
         }
     }
 
     private void result() {
-        OutputView.printMenu(menu);
+        OutputView.printMenuSelect(menu);
         OutputView.printBeforeDiscountMenuTotalPrice(menu);
         this.event = new Event(visitDate, eventCalendar, menu, starDate);
         OutputView.printGift(event);
