@@ -1,5 +1,6 @@
 package christmas.domain;
 
+import christmas.domain.contants.Badge;
 import christmas.domain.contants.Gift;
 import christmas.domain.contants.event.EventDiscount;
 import christmas.domain.contants.event.EventValue;
@@ -122,6 +123,13 @@ public class Event {
                 .stream()
                 .mapToInt(amount -> amount)
                 .sum();
+    }
+
+    public Badge getBadge() {
+        return Arrays.stream(Badge.values())
+                .filter(badge -> badge.getWhichBadgeFromAmount(getTotalBenefitsAmount()))
+                .findFirst()
+                .orElse(Badge.NONE);
     }
 
     public boolean isVisitDateChristmasDDay(VisitDate visitDate, EventCalendar eventCalendar) {

@@ -1,5 +1,6 @@
 package christmas.domain;
 
+import christmas.domain.contants.Badge;
 import christmas.domain.contants.Gift;
 import christmas.domain.contants.event.EventDiscount;
 import christmas.domain.contants.event.EventValue;
@@ -201,6 +202,41 @@ public class EventTest {
                                 2, eventCalendar),
                         new Menu("양송이수프-2,티본스테이크-2,바비큐립-1,초코케이크-2,제로콜라-1"),
                         201831
+                )
+        );
+    }
+
+    @ParameterizedTest
+    @DisplayName("총혜택 금액에 맞는 배지를 부여한다.")
+    @MethodSource("EventSettingForBadge")
+    void validateBadgeForBenefits(VisitDate visitDate, Menu menu, Badge exceptBadge) {
+        Event event = new Event();
+        event.eventSetting(visitDate, eventCalendar, starDate, menu);
+        Assertions.assertThat(event.getBadge()).isEqualTo(
+                exceptBadge);
+    }
+
+    static Stream<Arguments> EventSettingForBadge() {
+        return Stream.of(
+                Arguments.arguments(
+                        VisitDate.of(25, eventCalendar),
+                        new Menu("양송이수프-1"),
+                        Badge.NONE
+                ),
+                Arguments.arguments(VisitDate.of(
+                                23, eventCalendar),
+                        new Menu("티본스테이크-1"),
+                        Badge.START
+                ),
+                Arguments.arguments(VisitDate.of(
+                                24, eventCalendar),
+                        new Menu("초코케이크-3"),
+                        Badge.TREE
+                ),
+                Arguments.arguments(VisitDate.of(
+                                3, eventCalendar),
+                        new Menu("티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1"),
+                        Badge.SANTA
                 )
         );
     }

@@ -3,7 +3,6 @@ package christmas.view;
 import christmas.domain.Event;
 import christmas.domain.EventCalendar;
 import christmas.domain.Menu;
-import christmas.domain.contants.Badge;
 import christmas.domain.contants.menu.MenuGroup;
 import christmas.message.ErrorMessage;
 import christmas.util.EventCalculate;
@@ -102,10 +101,7 @@ public class OutputView {
 
     public static void printBadge(Event event, EventCalendar eventCalendar) {
         System.out.println(String.format(OutputMessage.EVENT_BADGE.getFormattedMessage(), eventCalendar.getMonth()));
-        System.out.print(Arrays.stream(Badge.values())
-                .filter(badge -> badge.getWhichBadgeFromAmount(event.getTotalBenefitsAmount()))
-                .findFirst()
-                .orElse(Badge.NONE));
+        System.out.print(event.getBadge());
     }
 
     public static void printErrorMessage(String errorMessage) {
