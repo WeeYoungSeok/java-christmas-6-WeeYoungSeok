@@ -29,9 +29,8 @@ public class Menu {
                     String menuName = menuNameAndCount.split(OutputMessage.HYPHEN.getMessage())[0];
                     String menuCount = menuNameAndCount.split(OutputMessage.HYPHEN.getMessage())[1];
                     MenuGroup menuGroup = MenuGroup.findMenuCategory(menuName);
-                    menuGroups.computeIfAbsent(menuGroup.getTitle(), k -> new HashMap<>()).put(
-                            menuGroup.getMenuByName(menuName),
-                            Integer.parseInt(menuCount));
+                    menuGroups.computeIfAbsent(menuGroup.getTitle(), k -> new HashMap<>())
+                            .put(menuGroup.getMenuByName(menuName), Integer.parseInt(menuCount));
                 });
         return menuGroups;
     }

@@ -34,8 +34,7 @@ public enum MenuGroup {
                 .filter(menuGroup -> menuGroup.getMenuItems().stream()
                         .anyMatch(menu -> menu.getName().equals(menuName)))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(
-                        ErrorMessage.MENU_NOT_FOUND.getReasonFormattedMessage()));
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.MENU_NOT_FOUND.getReasonFormattedMessage()));
     }
 
     public MenuInterface getMenuByName(String menuName) {

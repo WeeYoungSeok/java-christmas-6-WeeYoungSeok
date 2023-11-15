@@ -46,11 +46,9 @@ public class OutputView {
     public static void printGift(Event event) {
         System.out.println(OutputMessage.GIFT_MENU.getFormattedMessage());
         StringBuilder stringBuilder = new StringBuilder();
-        event.getGifts().forEach((key, value) -> {
-            stringBuilder.append(key.getName())
-                    .append(OutputMessage.BLANK.getMessage())
-                    .append(String.format(OutputMessage.COUNT.getMessage(), key.getCount()));
-        });
+        event.getGifts().forEach((key, value) -> stringBuilder.append(key.getName())
+                .append(OutputMessage.BLANK.getMessage())
+                .append(String.format(OutputMessage.COUNT.getMessage(), key.getCount())));
         addBuilderNone();
         System.out.println(stringBuilder);
         System.out.println();
@@ -68,9 +66,14 @@ public class OutputView {
         event.getEventDiscountGroup().entrySet().stream()
                 .filter(entry -> entry.getValue() != 0)
                 .forEach(entry -> stringJoiner.add(
-                        entry.getKey().getDiscountName() + OutputMessage.COLON.getMessage() + OutputMessage.BLANK.getMessage() +
-                                String.format(OutputMessage.PRICE.getMessage(), eventCalculate.toNegative(entry.getValue()))
-                ));
+                                entry.getKey().getDiscountName() +
+                                        OutputMessage.COLON.getMessage() + OutputMessage.BLANK.getMessage() +
+                                        String.format(
+                                                OutputMessage.PRICE.getMessage(),
+                                                eventCalculate.toNegative(entry.getValue())
+                                        )
+                        )
+                );
         stringBuilder.append(stringJoiner);
     }
 

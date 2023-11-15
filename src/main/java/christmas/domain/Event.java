@@ -39,11 +39,11 @@ public class Event {
     }
 
     public void eventDiscountSetting(VisitDate visitDate, EventCalendar eventCalendar, StarDate starDate, Menu menu) {
-            weekdayDiscountSetting(visitDate, eventCalendar, menu);
-            weekendDiscountSetting(visitDate, eventCalendar, menu);
-            christmasDDayDiscountSetting(visitDate, eventCalendar);
-            specialDiscountSetting(visitDate, starDate);
-            eventDiscountGroupAddGift();
+        weekdayDiscountSetting(visitDate, eventCalendar, menu);
+        weekendDiscountSetting(visitDate, eventCalendar, menu);
+        christmasDDayDiscountSetting(visitDate, eventCalendar);
+        specialDiscountSetting(visitDate, starDate);
+        eventDiscountGroupAddGift();
     }
 
     public void giftSetting(VisitDate visitDate, EventCalendar eventCalendar, Menu menu) {
@@ -57,7 +57,8 @@ public class Event {
 
     public void eventDiscountGroupAddGift() {
         this.gifts.forEach((key, value) -> this.eventDiscountGroup.put(
-                EventDiscount.GIFT, this.eventDiscountGroup.getOrDefault(EventDiscount.GIFT, 0) + value
+                EventDiscount.GIFT,
+                this.eventDiscountGroup.getOrDefault(EventDiscount.GIFT, 0) + value
         ));
     }
 
@@ -67,15 +68,16 @@ public class Event {
                     this.eventDiscountGroup.getOrDefault(
                             EventDiscount.WEEKDAY, 0) +
                             menu.categoryMenuCount(MenuGroup.DESSERT) * EventDiscount.WEEKDAY.getDiscount()
-                    );
+            );
         }
     }
 
     public void weekendDiscountSetting(VisitDate visitDate, EventCalendar eventCalendar, Menu menu) {
         if (visitDate.isWeekend(eventCalendar) && isVisitDateAllDateEvent(visitDate, eventCalendar)) {
-            this.eventDiscountGroup.put(EventDiscount.WEEKEND, this.eventDiscountGroup.getOrDefault(
-                    EventDiscount.WEEKEND, 0) +
-                    menu.categoryMenuCount(MenuGroup.MAIN) * EventDiscount.WEEKEND.getDiscount());
+            this.eventDiscountGroup.put(EventDiscount.WEEKEND,
+                    this.eventDiscountGroup.getOrDefault(
+                            EventDiscount.WEEKEND, 0) +
+                            menu.categoryMenuCount(MenuGroup.MAIN) * EventDiscount.WEEKEND.getDiscount());
         }
     }
 
