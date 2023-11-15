@@ -27,15 +27,13 @@ public class Menu {
                 .forEach(menuNameAndCount -> {
                     String menuName = menuNameAndCount.split("-")[0];
                     String menuCount = menuNameAndCount.split("-")[1];
-                    menuGroups.computeIfAbsent(validateInvalidMenuName(menuName).getTitle(), k -> new HashMap<>())
-                            .put(MenuGroup.findMenu(menuName), Integer.parseInt(menuCount));
+                    MenuGroup menuGroup = MenuGroup.findMenuCategory(menuName);
+                    menuGroups.computeIfAbsent(menuGroup.getTitle(), k -> new HashMap<>()).put(
+                            menuGroup.getMenuByName(menuName),
+                            Integer.parseInt(menuCount));
                 });
         validateOnlyBeverage(menuGroups);
         return menuGroups;
-    }
-
-    public MenuGroup validateInvalidMenuName(String menuName) {
-        return MenuGroup.findMenuCategory(menuName);
     }
 
     public int validateMenuCount(String menuCount) {

@@ -29,15 +29,6 @@ public enum MenuGroup {
         return menuItems;
     }
 
-    public static MenuInterface findMenu(String menuName) {
-        return Arrays.stream(MenuGroup.values())
-                .flatMap(menuGroup -> menuGroup.getMenuItems().stream()
-                        .filter(menu -> menu.getName().equals(menuName)))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(
-                        ErrorMessage.MENU_NOT_FOUND.getReasonFormattedMessage()));
-    }
-
     public static MenuGroup findMenuCategory(String menuName) {
         return Arrays.stream(MenuGroup.values())
                 .filter(menuGroup -> menuGroup.getMenuItems().stream()
@@ -45,6 +36,13 @@ public enum MenuGroup {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(
                         ErrorMessage.MENU_NOT_FOUND.getReasonFormattedMessage()));
+    }
+
+    public MenuInterface getMenuByName(String menuName) {
+        return this.getMenuItems().stream()
+                .filter(item -> item.getName().equals(menuName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.MENU_NOT_FOUND.getReasonFormattedMessage()));
     }
 
     @Override

@@ -13,22 +13,21 @@ import java.util.Arrays;
 import java.util.StringJoiner;
 
 public class OutputView {
-
-    private static StringBuilder stringBuilder = new StringBuilder();
-    private static StringJoiner stringJoiner = new StringJoiner("\n");
-    private static EventCalculate eventCalculate = new EventCalculate();
+    private static final StringBuilder stringBuilder = new StringBuilder();
+    private static final StringJoiner stringJoiner = new StringJoiner("\n");
+    private static final EventCalculate eventCalculate = new EventCalculate();
 
     public static void printStart() {
         System.out.println(OutputMessage.START.getMessage());
     }
 
-    public static void printMenuSelect(Menu menu) {
+    public static void printSelectMenu(Menu menu) {
         System.out.println(OutputMessage.ORDER_MENU.getFormattedMessage());
         System.out.println(menu);
         System.out.println();
     }
 
-    public static void printMenuList(String errorMessage) {
+    public static void printAllMenu(String errorMessage) {
         if (errorMessage.contains(ErrorMessage.MENU_NOT_FOUND.getMessage())) {
             stringJoiner.add("");
             stringJoiner.add(OutputMessage.ORDER_LIST.getMessage());

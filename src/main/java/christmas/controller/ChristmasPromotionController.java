@@ -17,6 +17,7 @@ public class ChristmasPromotionController {
         starDateSetting();
         visitDate();
         menuSetting();
+        eventSetting();
         result();
     }
 
@@ -50,17 +51,20 @@ public class ChristmasPromotionController {
             } catch (IllegalArgumentException e) {
                 OutputView.printErrorMessage(ErrorMessage.INVALID_ORDER.getFormattedMessage());
                 System.out.println(e.getMessage());
-                OutputView.printMenuList(e.getMessage());
+                OutputView.printAllMenu(e.getMessage());
                 System.out.println();
             }
         }
     }
 
-    private void result() {
-        OutputView.printMenuSelect(menu);
-        OutputView.printBeforeDiscountMenuTotalPrice(menu);
+    private void eventSetting() {
         this.event = new Event();
         this.event.eventSetting(visitDate, eventCalendar, starDate, menu);
+    }
+
+    private void result() {
+        OutputView.printSelectMenu(menu);
+        OutputView.printBeforeDiscountMenuTotalPrice(menu);
         OutputView.printGift(event);
         OutputView.printBenefits(event);
         OutputView.printBenefitsAmount(event);
