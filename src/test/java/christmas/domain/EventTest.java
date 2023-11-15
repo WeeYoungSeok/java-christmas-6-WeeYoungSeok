@@ -179,4 +179,29 @@ public class EventTest {
                 )
         );
     }
+
+    @ParameterizedTest
+    @DisplayName("할인 후 예상 결제 금액을 계산할 때 증정 이벤트는 제외된 값을 계산")
+    @MethodSource("EventSettingForAfterPayAmount")
+    void afterPayAmount(VisitDate visitDate, Menu menu, int afterPayAmount) {
+        Event event = new Event();
+        event.eventSetting(visitDate, eventCalendar, starDate, menu);
+        Assertions.assertThat(event.getTotalEventDiscount()).isEqualTo(
+                menu.getTotalMenuPrice() - afterPayAmount);
+    }
+
+    static Stream<Arguments> EventSettingForAfterPayAmount() {
+        return Stream.of(
+                Arguments.arguments(
+                        VisitDate.of(3, eventCalendar),
+                        new Menu("티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1"),
+                        135754
+                ),
+                Arguments.arguments(VisitDate.of(
+                                2, eventCalendar),
+                        new Menu("양송이수프-2,티본스테이크-2,바비큐립-1,초코케이크-2,제로콜라-1"),
+                        201831
+                )
+        );
+    }
 }
