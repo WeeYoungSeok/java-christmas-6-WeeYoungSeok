@@ -12,8 +12,6 @@ import java.util.Arrays;
 import java.util.StringJoiner;
 
 public class OutputView {
-    private static final StringBuilder stringBuilder = new StringBuilder();
-    private static final StringJoiner stringJoiner = new StringJoiner("\n");
     private static final EventCalculate eventCalculate = new EventCalculate();
 
     public static void printStart() {
@@ -27,6 +25,7 @@ public class OutputView {
     }
 
     public static void printAllMenu(String errorMessage) {
+        StringJoiner stringJoiner = new StringJoiner("\n");
         if (errorMessage.contains(ErrorMessage.MENU_NOT_FOUND.getMessage())) {
             stringJoiner.add(OutputMessage.EMPTY.getMessage());
             stringJoiner.add(OutputMessage.ORDER_LIST.getMessage());
@@ -49,20 +48,22 @@ public class OutputView {
         event.getGifts().forEach((key, value) -> stringBuilder.append(key.getName())
                 .append(OutputMessage.BLANK.getMessage())
                 .append(String.format(OutputMessage.COUNT.getMessage(), key.getCount())));
-        addBuilderNone();
+        addBuilderNone(stringBuilder);
         System.out.println(stringBuilder);
         System.out.println();
     }
 
     public static void printBenefits(Event event) {
+        StringBuilder stringBuilder = new StringBuilder();
+        StringJoiner stringJoiner = new StringJoiner("\n");
         System.out.println(OutputMessage.BENEFITS_HISTORY.getFormattedMessage());
-        printDiscount(event);
-        addBuilderNone();
+        printDiscount(event, stringJoiner, stringBuilder);
+        addBuilderNone(stringBuilder);
         System.out.println(stringBuilder);
         System.out.println();
     }
 
-    public static void printDiscount(Event event) {
+    public static void printDiscount(Event event, StringJoiner stringJoiner, StringBuilder stringBuilder) {
         event.getEventDiscountGroup().entrySet().stream()
                 .filter(entry -> entry.getValue() != 0)
                 .forEach(entry -> stringJoiner.add(
@@ -111,7 +112,7 @@ public class OutputView {
         System.out.println(errorMessage);
     }
 
-    public static void addBuilderNone() {
+    public static void addBuilderNone(StringBuilder stringBuilder) {
         if (stringBuilder.isEmpty()) {
             stringBuilder.append(OutputMessage.NONE.getMessage());
         }
