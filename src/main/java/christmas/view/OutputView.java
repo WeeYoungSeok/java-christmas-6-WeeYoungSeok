@@ -29,9 +29,9 @@ public class OutputView {
 
     public static void printAllMenu(String errorMessage) {
         if (errorMessage.contains(ErrorMessage.MENU_NOT_FOUND.getMessage())) {
-            stringJoiner.add("");
+            stringJoiner.add(OutputMessage.EMPTY.getMessage());
             stringJoiner.add(OutputMessage.ORDER_LIST.getMessage());
-            stringJoiner.add("");
+            stringJoiner.add(OutputMessage.EMPTY.getMessage());
             Arrays.stream(MenuGroup.values())
                     .forEach(menuGroup -> stringJoiner.add(menuGroup.toString()));
             System.out.print(stringJoiner);
@@ -49,7 +49,8 @@ public class OutputView {
         StringBuilder stringBuilder = new StringBuilder();
         event.getGifts().forEach((key, value) -> {
             stringBuilder.append(key.getName())
-                    .append(OutputMessage.BLANK.getMessage()).append(key.getCount()).append("개");
+                    .append(OutputMessage.BLANK.getMessage())
+                    .append(String.format(OutputMessage.COUNT.getMessage(), key.getCount()));
         });
         addBuilderNone();
         System.out.println(stringBuilder);

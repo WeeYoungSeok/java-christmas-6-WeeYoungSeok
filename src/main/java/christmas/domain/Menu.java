@@ -15,7 +15,7 @@ public class Menu {
     private final Map<String, Map<MenuInterface, Integer>> menus;
 
     public Menu(String menuInput) {
-        String[] menuCommaSplit = menuInput.split(",");
+        String[] menuCommaSplit = menuInput.split(OutputMessage.COMMA.getMessage());
         validateDuplicateMenu(menuCommaSplit);
         validateMenuCountLimits(menuCommaSplit);
         this.menus = menuSetting(menuCommaSplit);
@@ -26,8 +26,8 @@ public class Menu {
         Map<String, Map<MenuInterface, Integer>> menuGroups = new HashMap<>();
         Arrays.stream(menuNameAndCountArr)
                 .forEach(menuNameAndCount -> {
-                    String menuName = menuNameAndCount.split("-")[0];
-                    String menuCount = menuNameAndCount.split("-")[1];
+                    String menuName = menuNameAndCount.split(OutputMessage.HYPHEN.getMessage())[0];
+                    String menuCount = menuNameAndCount.split(OutputMessage.HYPHEN.getMessage())[1];
                     MenuGroup menuGroup = MenuGroup.findMenuCategory(menuName);
                     menuGroups.computeIfAbsent(menuGroup.getTitle(), k -> new HashMap<>()).put(
                             menuGroup.getMenuByName(menuName),
@@ -58,7 +58,7 @@ public class Menu {
 
     public void validateDuplicateMenu(String[] menuNameAndCount) {
         List<String> menuNames = Arrays.stream(menuNameAndCount)
-                .map(nameAndCount -> nameAndCount.split("-")[0].trim())
+                .map(nameAndCount -> nameAndCount.split(OutputMessage.HYPHEN.getMessage())[0].trim())
                 .toList();
         if (menuNames.size() != menuNames.stream().distinct().count()) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_DUPLICATE_MENU.getReasonFormattedMessage());
@@ -74,7 +74,9 @@ public class Menu {
 
     public void validateMenuCountLimits(String[] menuNameAndCount) {
         if (Arrays.stream(menuNameAndCount)
-                .mapToInt(nameAndCount -> validateMenuCount(nameAndCount.split("-")[1]))
+                .mapToInt(nameAndCount -> validateMenuCount(
+                        nameAndCount.split(OutputMessage.HYPHEN.getMessage())[1])
+                )
                 .sum() > MAX_MENU_COUNT) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_MENU_COUNT_LIMITS.getReasonFormattedMessage());
         }
@@ -107,7 +109,7 @@ public class Menu {
                 stringJoiner.add(
                         menu.getName() +
                                 OutputMessage.BLANK.getMessage() +
-                                count + "개")
+                                String.format(OutputMessage.COUNT.getMessage(), count))
         ));
         return stringJoiner.toString();
     }

@@ -8,14 +8,13 @@ import christmas.view.contants.InputMessage;
 import christmas.view.contants.OutputMessage;
 
 public class InputView {
-    private final String regTest = "(?:[^,]+-[^,-]+,)*[^,]+-[^,-]+";
     private static final NumericConverter numericConverter = new NumericConverter();
 
     public static int readDate() {
         System.out.println(InputMessage.VISIT_DATE.getMessage());
         String inputDate = removeBlankFromInput();
         CommonValidator.isBlank(inputDate);
-        return numericConverter.convert(inputDate.replace(OutputMessage.BLANK.getMessage(), ""));
+        return numericConverter.convert(inputDate);
     }
 
     public static String readMenu() {
@@ -28,6 +27,6 @@ public class InputView {
     }
 
     public static String removeBlankFromInput() {
-        return Console.readLine().replace(OutputMessage.BLANK.getMessage(), "");
+        return Console.readLine().replace(OutputMessage.BLANK.getMessage(), OutputMessage.EMPTY.getMessage());
     }
 }

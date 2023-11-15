@@ -1,6 +1,7 @@
 package christmas.domain.contants.menu;
 
 import christmas.message.ErrorMessage;
+import christmas.view.contants.OutputMessage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -47,8 +48,11 @@ public enum MenuGroup {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<").append(title).append(">\n");
-        StringJoiner stringJoiner = new StringJoiner(", ");
+        stringBuilder.append(OutputMessage.PREFIX.getMessage())
+                .append(title)
+                .append(OutputMessage.SUFFIX.getMessage())
+                .append("\n");
+        StringJoiner stringJoiner = new StringJoiner(OutputMessage.COMMA.getMessage() + OutputMessage.BLANK.getMessage());
         menuItems.forEach(item ->
                 stringJoiner.add(item.toString())
         );

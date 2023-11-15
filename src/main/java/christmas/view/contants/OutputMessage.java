@@ -1,11 +1,15 @@
 package christmas.view.contants;
 
 public enum OutputMessage {
+    EMPTY(""),
     START("안녕하세요! 우테코 식당 12월 이벤트 플래너입니다."),
     PREFIX("<"),
     SUFFIX(">"),
     COLON(":"),
     BLANK(" "),
+    COMMA(","),
+    HYPHEN("-"),
+    COUNT("%s개"),
     NONE("없음"),
     ORDER_MENU("주문 메뉴"),
     ORDER_LIST("메뉴 목록은 다음과 같습니다"),
