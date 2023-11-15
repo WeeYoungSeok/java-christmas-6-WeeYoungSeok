@@ -18,10 +18,11 @@ public class Menu {
         String[] menuCommaSplit = menuInput.split(",");
         validateDuplicateMenu(menuCommaSplit);
         validateMenuCountLimits(menuCommaSplit);
-        this.menus = menuSettingAndValidate(menuCommaSplit);
+        this.menus = menuSetting(menuCommaSplit);
+        validateOnlyBeverage();
     }
 
-    public Map<String, Map<MenuInterface, Integer>> menuSettingAndValidate(String[] menuNameAndCountArr) {
+    public Map<String, Map<MenuInterface, Integer>> menuSetting(String[] menuNameAndCountArr) {
         Map<String, Map<MenuInterface, Integer>> menuGroups = new HashMap<>();
         Arrays.stream(menuNameAndCountArr)
                 .forEach(menuNameAndCount -> {
@@ -32,7 +33,6 @@ public class Menu {
                             menuGroup.getMenuByName(menuName),
                             Integer.parseInt(menuCount));
                 });
-        validateOnlyBeverage(menuGroups);
         return menuGroups;
     }
 
@@ -65,8 +65,8 @@ public class Menu {
         }
     }
 
-    public void validateOnlyBeverage(Map<String, Map<MenuInterface, Integer>> menuGroups) {
-        if (menuGroups.entrySet().stream()
+    public void validateOnlyBeverage() {
+        if (this.menus.entrySet().stream()
                 .allMatch(entry -> entry.getKey().equals(MenuGroup.BEVERAGE.getTitle()))) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_ONLY_BEVERAGE.getReasonFormattedMessage());
         }
