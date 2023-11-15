@@ -17,7 +17,7 @@ public enum RegularExpression {
 
     public void validateMatch(String text) {
         if (!text.matches(pattern)) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_MENU_EXAMPLE.getReasonFormattedMessage());
+            throw new IllegalArgumentException(ErrorMessage.INVALID_EXAMPLE.getReasonFormattedMessage());
         }
     }
 }
