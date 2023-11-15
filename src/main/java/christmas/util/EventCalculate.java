@@ -8,7 +8,7 @@ public class EventCalculate implements Calculate {
 
     @Override
     public int minus(int x, int y) {
-        return x - y;
+        return Math.max(x - y, 0);
     }
 
     public int toNegative(int x) {
