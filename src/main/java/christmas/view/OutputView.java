@@ -10,6 +10,7 @@ import christmas.view.constants.OutputMessage;
 
 import java.util.Arrays;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 public class OutputView {
     private static final EventCalculate eventCalculate = new EventCalculate();
@@ -53,32 +54,27 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printBenefits(Event event) {
-        StringBuilder stringBuilder = new StringBuilder();
-        StringJoiner stringJoiner = new StringJoiner("\n");
+    public static void printBenefitHistory(Event event) {
         System.out.println(OutputMessage.BENEFITS_HISTORY.getFormattedMessage());
-        printDiscount(event, stringJoiner, stringBuilder);
-        addBuilderNone(stringBuilder);
-        System.out.println(stringBuilder);
+        printBenefits(event);
         System.out.println();
     }
 
-    public static void printDiscount(Event event, StringJoiner stringJoiner, StringBuilder stringBuilder) {
-        event.getEventDiscountGroup().entrySet().stream()
-                .filter(entry -> entry.getValue() != 0)
-                .forEach(entry -> stringJoiner.add(
-                                entry.getKey().getDiscountName() +
-                                        OutputMessage.COLON.getMessage() + OutputMessage.BLANK.getMessage() +
-                                        String.format(
-                                                OutputMessage.PRICE.getMessage(),
-                                                eventCalculate.toNegative(entry.getValue())
-                                        )
-                        )
-                );
-        stringBuilder.append(stringJoiner);
+    private static void printBenefits(Event event) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(
+                event.getEventDiscountGroup().entrySet().stream()
+                        .filter(entry -> entry.getValue() != 0)
+                        .map(entry -> entry.getKey().getDiscountName() +
+                                OutputMessage.COLON.getMessage() + OutputMessage.BLANK.getMessage() +
+                                String.format(OutputMessage.PRICE.getMessage(), eventCalculate.toNegative(entry.getValue())))
+                        .collect(Collectors.joining("\n"))
+        );
+        addBuilderNone(stringBuilder);
+        System.out.println(stringBuilder);
     }
 
-    public static void printBenefitsAmount(Event event) {
+    public static void printBenefitsAllAmount(Event event) {
         System.out.println(OutputMessage.TOTAL_BENEFITS_AMOUNT.getFormattedMessage());
         System.out.println(String.format(
                 OutputMessage.PRICE.getMessage(),
